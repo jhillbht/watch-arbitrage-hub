@@ -1,12 +1,14 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { usePremium } from '@/hooks/use-premium';
+import { Crown } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isPremium } = usePremium();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +41,15 @@ const Navbar = () => {
           <Link to="/#pricing" className="text-gray-600 hover:text-watch-blue transition-colors">
             Pricing
           </Link>
+          <li>
+            <Link 
+              to="/premium" 
+              className="flex items-center px-4 py-2 rounded hover:bg-gray-100 transition-colors"
+            >
+              <span className="mr-1">Premium</span>
+              {isPremium && <Crown className="h-3 w-3 text-amber-500" />}
+            </Link>
+          </li>
         </div>
         
         <div className="hidden md:flex items-center space-x-4">
