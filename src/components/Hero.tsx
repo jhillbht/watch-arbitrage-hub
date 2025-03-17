@@ -2,6 +2,7 @@
 import { ArrowRight, TrendingUp, DollarSign, Bell } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import PopularWatchesCarousel from './PopularWatchesCarousel';
 
 const Hero = () => {
   return (
@@ -132,6 +133,9 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      
+      {/* Add the popular watches carousel */}
+      <PopularWatchesCarousel />
     </section>
   );
 };
