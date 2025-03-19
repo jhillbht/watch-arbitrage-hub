@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 interface CalculateButtonProps {
   onClick: () => void;
@@ -9,10 +10,25 @@ interface CalculateButtonProps {
 }
 
 const CalculateButton = ({ onClick, disabled, isCalculating }: CalculateButtonProps) => {
+  const { toast } = useToast();
+  
+  const handleClick = () => {
+    if (disabled) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in all required fields before calculating",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    onClick();
+  };
+  
   return (
     <Button 
-      onClick={onClick} 
-      disabled={disabled}
+      onClick={handleClick} 
+      disabled={isCalculating}
       className="bg-watch-blue hover:bg-blue-600"
     >
       {isCalculating ? (

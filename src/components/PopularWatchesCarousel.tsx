@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Carousel,
   CarouselContent,
@@ -27,25 +28,27 @@ const PopularWatchesCarousel = () => {
           {popularWatches.map((watch, index) => (
             <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
               <div className="p-1">
-                <Card className="overflow-hidden border border-gray-100 hover:shadow-md transition-shadow duration-300">
-                  <CardContent className="p-4">
-                    <AspectRatio ratio={1 / 1} className="mb-3 bg-gray-100 rounded-md overflow-hidden">
-                      <img
-                        src={watch.imageUrl}
-                        alt={`${watch.brand} ${watch.model}`}
-                        className="object-cover w-full h-full"
-                      />
-                    </AspectRatio>
-                    <div>
-                      <h4 className="font-medium">{watch.brand}</h4>
-                      <p className="text-sm text-gray-700">{watch.model}</p>
-                      <div className="mt-2 flex justify-between items-center">
-                        <p className="text-sm text-gray-500">{watch.reference}</p>
-                        <p className="font-semibold">{watch.price}</p>
+                <Link to={`/dashboard?brand=${watch.brand}&model=${watch.model}`}>
+                  <Card className="overflow-hidden border border-gray-100 hover:shadow-md transition-shadow duration-300 cursor-pointer">
+                    <CardContent className="p-4">
+                      <AspectRatio ratio={1 / 1} className="mb-3 bg-gray-100 rounded-md overflow-hidden">
+                        <img
+                          src={watch.imageUrl}
+                          alt={`${watch.brand} ${watch.model}`}
+                          className="object-cover w-full h-full"
+                        />
+                      </AspectRatio>
+                      <div>
+                        <h4 className="font-medium">{watch.brand}</h4>
+                        <p className="text-sm text-gray-700">{watch.model}</p>
+                        <div className="mt-2 flex justify-between items-center">
+                          <p className="text-sm text-gray-500">{watch.reference}</p>
+                          <p className="font-semibold">{watch.price}</p>
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </Link>
               </div>
             </CarouselItem>
           ))}

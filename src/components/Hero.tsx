@@ -119,9 +119,11 @@ const Hero = () => {
                     <p className="text-sm text-gray-500">
                       Updated: Today, 11:43 AM
                     </p>
-                    <Button variant="ghost" size="sm" className="text-watch-blue hover:text-blue-700">
-                      View all
-                    </Button>
+                    <Link to="/dashboard">
+                      <Button variant="ghost" size="sm" className="text-watch-blue hover:text-blue-700">
+                        View all
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </div>
