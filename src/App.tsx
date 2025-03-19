@@ -11,6 +11,8 @@ import WatchList from './pages/WatchList';
 import DataProcessing from './pages/DataProcessing';
 import Auth from './pages/Auth';
 import PremiumFeatures from './pages/PremiumFeatures';
+import Features from './pages/Features';
+import Pricing from './pages/Pricing';
 import { PremiumProvider } from './hooks/use-premium';
 
 // Use this component to conditionally add padding based on route
@@ -41,6 +43,8 @@ function App() {
               <Route path="/data" element={<DataProcessing />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/premium" element={<PremiumFeatures />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/pricing" element={<Pricing />} />
             </Routes>
           </PageWrapper>
           <Footer />

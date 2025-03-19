@@ -45,21 +45,19 @@ const Navbar = () => {
           <Link to="/dashboard" className="text-gray-600 hover:text-watch-blue transition-colors">
             Dashboard
           </Link>
-          <Link to="/#features" className="text-gray-600 hover:text-watch-blue transition-colors">
+          <Link to="/features" className="text-gray-600 hover:text-watch-blue transition-colors">
             Features
           </Link>
-          <Link to="/#pricing" className="text-gray-600 hover:text-watch-blue transition-colors">
+          <Link to="/pricing" className="text-gray-600 hover:text-watch-blue transition-colors">
             Pricing
           </Link>
-          <li>
-            <Link 
-              to="/premium" 
-              className="flex items-center px-4 py-2 rounded hover:bg-gray-100 transition-colors"
-            >
-              <span className="mr-1">Premium</span>
-              {isPremium && <Crown className="h-3 w-3 text-amber-500" />}
-            </Link>
-          </li>
+          <Link 
+            to="/premium" 
+            className="flex items-center px-4 py-2 rounded hover:bg-gray-100 transition-colors"
+          >
+            <span className="mr-1">Premium</span>
+            {isPremium && <Crown className="h-3 w-3 text-amber-500" />}
+          </Link>
         </div>
         
         <div className="hidden md:flex items-center space-x-4">
@@ -95,14 +93,14 @@ const Navbar = () => {
               Dashboard
             </Link>
             <Link 
-              to="/#features" 
+              to="/features" 
               className="text-gray-700 py-2 hover:text-watch-blue"
               onClick={() => setIsMenuOpen(false)}
             >
               Features
             </Link>
             <Link 
-              to="/#pricing" 
+              to="/pricing" 
               className="text-gray-700 py-2 hover:text-watch-blue"
               onClick={() => setIsMenuOpen(false)}
             >
