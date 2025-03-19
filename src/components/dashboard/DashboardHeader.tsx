@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Bell, Search, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -21,6 +21,7 @@ interface DashboardHeaderProps {
 
 const DashboardHeader = ({ activeSection, isPremiumUser }: DashboardHeaderProps) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const sectionTitles: Record<string, string> = {
     'market-data': 'Market Data',
@@ -30,13 +31,27 @@ const DashboardHeader = ({ activeSection, isPremiumUser }: DashboardHeaderProps)
     'settings': 'Settings'
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if scrolled more than 10px
+      setIsScrolled(window.scrollY > 10);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Searching for:', searchQuery);
   };
 
   return (
-    <header className="sticky top-0 z-10 w-full bg-background/95 backdrop-blur-sm border-b px-4 py-3 flex items-center justify-between">
+    <header 
+      className={`sticky top-0 z-10 w-full backdrop-blur-sm border-b px-4 py-3 flex items-center justify-between transition-all duration-300 ${
+        isScrolled ? 'bg-background/95 shadow-sm' : 'bg-background'
+      }`}
+    >
       <div className="flex items-center gap-3">
         <SidebarTrigger className="lg:hidden" />
         <h1 className="text-xl font-semibold hidden sm:block">

@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePremium } from '@/hooks/use-premium';
@@ -9,6 +10,15 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isPremium } = usePremium();
+  const location = useLocation();
+  
+  // Check if we're on the dashboard page
+  const isDashboard = location.pathname.includes('/dashboard');
+  
+  // Don't show the navbar on dashboard pages
+  if (isDashboard) {
+    return null;
+  }
 
   useEffect(() => {
     const handleScroll = () => {
