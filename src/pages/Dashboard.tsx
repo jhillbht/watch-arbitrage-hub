@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { 
   SidebarProvider, 
   Sidebar, 
@@ -27,7 +27,8 @@ import {
   Calculator, 
   Settings, 
   LogOut, 
-  Bell
+  Bell,
+  Home
 } from 'lucide-react';
 
 import DashboardMarketData from '@/components/dashboard/DashboardMarketData';
@@ -49,18 +50,20 @@ const Dashboard = () => {
 
   return (
     <SidebarProvider defaultOpen={true}>
-      <div className="min-h-screen flex w-full bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen flex w-full bg-gray-950 dark:bg-gray-900">
         <Sidebar>
           <SidebarHeader className="flex flex-col items-center justify-center py-4">
-            <div className="flex items-center justify-center mb-2">
-              <img 
-                src="/placeholder.svg" 
-                alt="WatchArbitrage Pro" 
-                className="h-8 w-auto" 
-              />
-            </div>
-            <h2 className="text-lg font-bold tracking-tight">WatchArbitrage</h2>
-            <div className="text-xs font-medium bg-watch-blue text-white px-2 py-0.5 rounded-full">Pro</div>
+            <Link to="/" className="flex items-center justify-center">
+              <div className="flex items-center justify-center mb-2">
+                <img 
+                  src="/placeholder.svg" 
+                  alt="WatchArbitrage Pro" 
+                  className="h-8 w-auto" 
+                />
+              </div>
+              <h2 className="text-lg font-bold tracking-tight">WatchArbitrage</h2>
+              <div className="text-xs font-medium bg-watch-blue text-white px-2 py-0.5 rounded-full ml-2">Pro</div>
+            </Link>
           </SidebarHeader>
 
           <SidebarContent>
@@ -68,6 +71,16 @@ const Dashboard = () => {
               <SidebarGroupLabel>Navigation</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      tooltip="Home" 
+                      onClick={() => navigate('/')}
+                    >
+                      <Home />
+                      <span>Home</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  
                   <SidebarMenuItem>
                     <SidebarMenuButton 
                       tooltip="Market Data" 
@@ -167,7 +180,7 @@ const Dashboard = () => {
           </SidebarFooter>
         </Sidebar>
         
-        <SidebarInset className="flex flex-col">
+        <SidebarInset className="flex flex-col bg-gray-950">
           <DashboardHeader 
             activeSection={activeSection} 
             isPremiumUser={isPremiumUser} 

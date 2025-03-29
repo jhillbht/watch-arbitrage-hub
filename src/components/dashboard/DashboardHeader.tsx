@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { Link } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -49,7 +50,7 @@ const DashboardHeader = ({ activeSection, isPremiumUser }: DashboardHeaderProps)
   return (
     <header 
       className={`sticky top-0 z-10 w-full backdrop-blur-sm border-b px-4 py-3 flex items-center justify-between transition-all duration-300 ${
-        isScrolled ? 'bg-background/95 shadow-sm' : 'bg-background'
+        isScrolled ? 'bg-background/95 shadow-sm' : 'bg-background/80'
       }`}
     >
       <div className="flex items-center gap-3">
@@ -65,7 +66,7 @@ const DashboardHeader = ({ activeSection, isPremiumUser }: DashboardHeaderProps)
           <Input
             type="search"
             placeholder="Search watches, brands..."
-            className="w-full pl-9 bg-background"
+            className="w-full pl-9 bg-background/60"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
