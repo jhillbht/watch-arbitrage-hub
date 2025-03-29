@@ -69,8 +69,8 @@ export const fetchWatchWithPremiumData = async (watchId: string): Promise<Watch 
   try {
     // Use the database function to get all watch data including premium data
     const { data, error } = await supabase
-      .rpc('get_watch_with_data', {
-        watch_id: watchId
+      .rpc('get_watch_with_data', { 
+        watch_id: watchId 
       });
 
     if (error) {
@@ -115,7 +115,9 @@ export const fetchWatchWithPremiumData = async (watchId: string): Promise<Watch 
 
 export const triggerDataFetch = async (): Promise<boolean> => {
   try {
-    const { data, error } = await supabase.functions.invoke('fetch-watch-data');
+    const { data, error } = await supabase.functions.invoke('fetch-watch-data', {
+      body: { apiKey: 'itHHiAqB6pa0DHn6mAvnJ5cwVgJZCpkK2zZG3HHf' }
+    });
     
     if (error) {
       console.error('Error triggering data fetch:', error);
