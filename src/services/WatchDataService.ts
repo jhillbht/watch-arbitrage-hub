@@ -76,26 +76,26 @@ export const fetchWatchWithPremiumData = async (watchId: string): Promise<Watch 
       return null;
     }
 
-    // Transform the data into the Watch type
+    // Transform the data into the Watch type with correct type assertions
     return {
-      id: Number(data.id.substring(0, 8), 16), // Use part of UUID as numeric ID
-      brand: data.brand,
-      model: data.model,
-      reference: data.reference,
-      image: data.image,
-      prices: data.prices,
+      id: Number((data as any).id.substring(0, 8), 16), // Use part of UUID as numeric ID
+      brand: (data as any).brand,
+      model: (data as any).model,
+      reference: (data as any).reference,
+      image: (data as any).image,
+      prices: (data as any).prices,
       arbitrage: {
-        bestBuy: data.arbitrage.bestBuy,
-        bestSell: data.arbitrage.bestSell,
-        profit: Number(data.arbitrage.profit),
-        roi: Number(data.arbitrage.roi)
+        bestBuy: (data as any).arbitrage.bestBuy,
+        bestSell: (data as any).arbitrage.bestSell,
+        profit: Number((data as any).arbitrage.profit),
+        roi: Number((data as any).arbitrage.roi)
       },
-      premiumData: data.premiumData ? {
-        historicalPrices: data.premiumData.historicalPrices || [],
-        marketDepth: data.premiumData.marketDepth || [],
-        salesVelocity: data.premiumData.salesVelocity || 0,
-        dealerPremium: data.premiumData.dealerPremium || 0,
-        confidence: data.premiumData.confidence || 0
+      premiumData: (data as any).premiumData ? {
+        historicalPrices: (data as any).premiumData.historicalPrices || [],
+        marketDepth: (data as any).premiumData.marketDepth || [],
+        salesVelocity: (data as any).premiumData.salesVelocity || 0,
+        dealerPremium: (data as any).premiumData.dealerPremium || 0,
+        confidence: (data as any).premiumData.confidence || 0
       } : undefined
     };
   } catch (error) {
@@ -113,7 +113,7 @@ export const triggerDataFetch = async (): Promise<boolean> => {
       return false;
     }
     
-    return data.success;
+    return data?.success;
   } catch (error) {
     console.error('Error in triggerDataFetch:', error);
     return false;

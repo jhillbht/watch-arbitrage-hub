@@ -1,7 +1,10 @@
 
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useDataCollection, useArbitrageAnalysis } from '@/services/DataProcessingService';
+import { 
+  useDataCollection, 
+  useArbitrageAnalysis 
+} from '@/services/data-processing';
 import DataPipelineTab from '@/components/data-processing/DataPipelineTab';
 import ArbitrageTab from '@/components/data-processing/ArbitrageTab';
 import PricingTab from '@/components/data-processing/PricingTab';

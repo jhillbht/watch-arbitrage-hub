@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { 
   usePremiumPricingCalculator,
   WatchModel
-} from '@/services/DataProcessingService';
+} from '@/services/data-processing';
 import {
   Card,
   CardContent,
