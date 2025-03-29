@@ -1,9 +1,9 @@
 
 import { useState } from 'react';
 import { 
-  usePremiumPricingCalculator,
   WatchModel
-} from '@/services/data-processing';
+} from '@/services/data-processing/DataProcessingTypes';
+import { usePremiumPricingCalculator } from '@/services/data-processing/PricingService';
 import {
   Card,
   CardContent,

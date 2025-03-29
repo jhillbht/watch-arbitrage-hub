@@ -1,5 +1,4 @@
-
-import { WatchModel } from '@/services/DataProcessingService';
+import { WatchModel } from '@/services/data-processing/DataProcessingTypes';
 
 // Mock watch data
 export const mockWatches: WatchModel[] = [

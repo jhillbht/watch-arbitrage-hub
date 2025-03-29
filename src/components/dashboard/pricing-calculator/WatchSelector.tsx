@@ -1,7 +1,6 @@
-
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { WatchModel } from '@/services/DataProcessingService';
+import { WatchModel } from '@/services/data-processing/DataProcessingTypes';
 
 interface WatchSelectorProps {
   watches: WatchModel[];

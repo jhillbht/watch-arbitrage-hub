@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/components/ui/use-toast";
-import { NotificationService } from '@/services/data-processing';
+import { NotificationService } from '@/services/data-processing/NotificationService';
 
 interface PriceAlertFormProps {
   watchId: string;

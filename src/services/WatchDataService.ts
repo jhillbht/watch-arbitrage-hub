@@ -22,10 +22,14 @@ export const fetchWatches = async (): Promise<Watch[]> => {
       throw error;
     }
 
+    if (!data) {
+      return [];
+    }
+
     // Transform the data into the Watch type
     const watches: Watch[] = data.map(item => {
       // Extract prices from watch_prices array
-      const prices = item.watch_prices.reduce((acc, curr) => {
+      const prices = item.watch_prices.reduce((acc: any, curr: any) => {
         acc[curr.region as keyof typeof acc] = Number(curr.price);
         return acc;
       }, { us: 0, eu: 0, uk: 0, jp: 0, hk: 0 });
@@ -76,26 +80,29 @@ export const fetchWatchWithPremiumData = async (watchId: string): Promise<Watch 
       return null;
     }
 
+    // Cast data to appropriate type and process it
+    const watchData = data as any;
+
     // Transform the data into the Watch type with correct type assertions
     return {
-      id: Number((data as any).id.substring(0, 8), 16), // Use part of UUID as numeric ID
-      brand: (data as any).brand,
-      model: (data as any).model,
-      reference: (data as any).reference,
-      image: (data as any).image,
-      prices: (data as any).prices,
+      id: Number(watchData.id.substring(0, 8), 16), // Use part of UUID as numeric ID
+      brand: watchData.brand,
+      model: watchData.model,
+      reference: watchData.reference,
+      image: watchData.image,
+      prices: watchData.prices,
       arbitrage: {
-        bestBuy: (data as any).arbitrage.bestBuy,
-        bestSell: (data as any).arbitrage.bestSell,
-        profit: Number((data as any).arbitrage.profit),
-        roi: Number((data as any).arbitrage.roi)
+        bestBuy: watchData.arbitrage.bestBuy,
+        bestSell: watchData.arbitrage.bestSell,
+        profit: Number(watchData.arbitrage.profit),
+        roi: Number(watchData.arbitrage.roi)
       },
-      premiumData: (data as any).premiumData ? {
-        historicalPrices: (data as any).premiumData.historicalPrices || [],
-        marketDepth: (data as any).premiumData.marketDepth || [],
-        salesVelocity: (data as any).premiumData.salesVelocity || 0,
-        dealerPremium: (data as any).premiumData.dealerPremium || 0,
-        confidence: (data as any).premiumData.confidence || 0
+      premiumData: watchData.premiumData ? {
+        historicalPrices: watchData.premiumData.historicalPrices || [],
+        marketDepth: watchData.premiumData.marketDepth || [],
+        salesVelocity: watchData.premiumData.salesVelocity || 0,
+        dealerPremium: watchData.premiumData.dealerPremium || 0,
+        confidence: watchData.premiumData.confidence || 0
       } : undefined
     };
   } catch (error) {
