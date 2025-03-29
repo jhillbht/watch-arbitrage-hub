@@ -45,6 +45,9 @@ const Navbar = () => {
         </Link>
         
         <div className="hidden md:flex items-center space-x-8">
+          <Link to="/" className="text-white hover:text-watch-blue transition-colors font-medium">
+            Home
+          </Link>
           <Link to="/dashboard" className="text-white hover:text-watch-blue transition-colors font-medium">
             Dashboard
           </Link>
@@ -65,7 +68,7 @@ const Navbar = () => {
         
         <div className="hidden md:flex items-center space-x-4">
           <Link to="/auth">
-            <Button variant="outline" className="border-white text-white hover:bg-white/20 hover:text-white">
+            <Button variant="outline" className="border-gray-800 bg-black text-watch-blue hover:bg-black/80 hover:text-watch-blue">
               Sign In
             </Button>
           </Link>
@@ -88,6 +91,13 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden absolute top-16 left-0 right-0 bg-black/95 shadow-lg p-4 border-t border-gray-800 animate-fade-in">
           <div className="flex flex-col space-y-4 px-4">
+            <Link 
+              to="/" 
+              className="text-white py-2 hover:text-watch-blue"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
             <Link 
               to="/dashboard" 
               className="text-white py-2 hover:text-watch-blue"

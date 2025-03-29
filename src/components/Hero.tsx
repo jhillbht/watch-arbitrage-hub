@@ -10,7 +10,7 @@ const Hero = () => {
       {/* Full-width hero image background */}
       <div className="absolute inset-0 -z-10">
         <img 
-          src="https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+          src="/lovable-uploads/4944f73a-1679-48ec-a0ba-651479454299.png" 
           alt="Luxury watch background" 
           className="w-full h-full object-cover"
         />
@@ -63,62 +63,62 @@ const Hero = () => {
           </div>
           
           <div className="relative animate-fade-up mt-8 lg:mt-0" style={{ animationDelay: '0.3s' }}>
-            <div className="premium-card overflow-hidden bg-white/90 backdrop-blur-md border border-gray-100 shadow-premium rounded-2xl">
+            <div className="premium-card overflow-hidden bg-black/80 backdrop-blur-md border border-gray-800 shadow-premium rounded-2xl">
               <div className="p-6 space-y-6">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold">Market Dashboard</h3>
+                  <h3 className="text-xl font-semibold text-white">Market Dashboard</h3>
                   <span className="text-xs bg-watch-blue/10 text-watch-blue px-2 py-1 rounded-full">
                     Live Data
                   </span>
                 </div>
                 
                 <div className="space-y-4">
-                  <div className="glass-card p-4">
+                  <div className="glass-card p-4 bg-black/60 border border-gray-700">
                     <div className="flex justify-between">
                       <div>
-                        <h4 className="font-medium">Rolex Submariner</h4>
-                        <p className="text-xs text-gray-500">Ref. 124060</p>
+                        <h4 className="font-medium text-white">Rolex Submariner</h4>
+                        <p className="text-xs text-gray-400">Ref. 124060</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold">$14,500</p>
-                        <p className="text-xs text-green-600">+$820 (5.3%)</p>
+                        <p className="font-semibold text-white">$14,500</p>
+                        <p className="text-xs text-green-500">+$820 (5.3%)</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="glass-card p-4">
+                  <div className="glass-card p-4 bg-black/60 border border-gray-700">
                     <div className="flex justify-between">
                       <div>
-                        <h4 className="font-medium">Patek Philippe Nautilus</h4>
-                        <p className="text-xs text-gray-500">Ref. 5711/1A</p>
+                        <h4 className="font-medium text-white">Patek Philippe Nautilus</h4>
+                        <p className="text-xs text-gray-400">Ref. 5711/1A</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold">$142,750</p>
-                        <p className="text-xs text-red-600">-$2,300 (1.6%)</p>
+                        <p className="font-semibold text-white">$142,750</p>
+                        <p className="text-xs text-red-500">-$2,300 (1.6%)</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="glass-card p-4">
+                  <div className="glass-card p-4 bg-black/60 border border-gray-700">
                     <div className="flex justify-between">
                       <div>
-                        <h4 className="font-medium">Audemars Piguet Royal Oak</h4>
-                        <p className="text-xs text-gray-500">Ref. 15500ST</p>
+                        <h4 className="font-medium text-white">Audemars Piguet Royal Oak</h4>
+                        <p className="text-xs text-gray-400">Ref. 15500ST</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold">$79,300</p>
-                        <p className="text-xs text-green-600">+$1,250 (1.8%)</p>
+                        <p className="font-semibold text-white">$79,300</p>
+                        <p className="text-xs text-green-500">+$1,250 (1.8%)</p>
                       </div>
                     </div>
                   </div>
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-400">
                     Updated: Today, 11:43 AM
                   </p>
                   <Link to="/dashboard">
-                    <Button variant="ghost" size="sm" className="text-watch-blue hover:text-blue-700">
+                    <Button variant="ghost" size="sm" className="text-watch-blue hover:text-blue-500">
                       View all
                     </Button>
                   </Link>

@@ -20,6 +20,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         "watch-blue": "bg-watch-blue text-white hover:bg-blue-600",
+        "sign-in": "bg-black text-watch-blue border border-gray-800 hover:bg-black/80",
       },
       size: {
         default: "h-10 px-4 py-2",
