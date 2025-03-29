@@ -12,14 +12,7 @@ const Navbar = () => {
   const { isPremium } = usePremium();
   const location = useLocation();
   
-  // Check if we're on the dashboard page
-  const isDashboard = location.pathname.includes('/dashboard');
-  
-  // Don't show the navbar on dashboard pages
-  if (isDashboard) {
-    return null;
-  }
-
+  // All hooks are called before any conditional returns
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -28,6 +21,14 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  // Check if we're on the dashboard page
+  const isDashboard = location.pathname.includes('/dashboard');
+  
+  // Don't show the navbar on dashboard pages
+  if (isDashboard) {
+    return null;
+  }
 
   return (
     <nav 
