@@ -129,7 +129,7 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Add the popular watches carousel */}
+      {/* Popular watches carousel */}
       <div className="bg-white/95 backdrop-blur-sm py-12">
         <PopularWatchesCarousel />
       </div>

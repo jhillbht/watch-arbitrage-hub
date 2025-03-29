@@ -14,7 +14,7 @@ import { popularWatches } from '@/data/popularWatches';
 
 const PopularWatchesCarousel = () => {
   return (
-    <div className="w-full max-w-5xl mx-auto mt-12">
+    <div className="w-full max-w-5xl mx-auto">
       <h3 className="text-2xl font-semibold mb-6 text-center">Popular Models</h3>
       
       <Carousel
