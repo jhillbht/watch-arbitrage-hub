@@ -1,98 +1,110 @@
 
-import { Globe } from 'lucide-react';
-import { Watch, regionNames } from '@/types/watch';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatCurrency } from '@/utils/formatters';
+import { Watch } from '@/types/watch';
 import WatchArbitrageCell from './WatchArbitrageCell';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface WatchListingTableProps {
   watches: Watch[];
+  isLoading?: boolean;
 }
 
-const WatchListingTable = ({ watches }: WatchListingTableProps) => {
-  return (
-    <div className="overflow-auto pb-4">
-      <table className="w-full min-w-[900px] bg-white/10 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden shadow-xl">
-        <thead>
-          <tr className="bg-black/40">
-            <th className="text-left p-4 font-medium text-gray-200">Watch</th>
-            <th className="text-center p-4 font-medium text-gray-200">
-              <div className="flex items-center justify-center">
-                <Globe className="h-4 w-4 mr-1" /> US
+const WatchListingTable = ({ watches, isLoading = false }: WatchListingTableProps) => {
+  const regionNames = {
+    us: 'US',
+    eu: 'Europe',
+    uk: 'UK',
+    jp: 'Japan',
+    hk: 'Hong Kong'
+  };
+
+  const renderedSkeleton = (
+    <TableRow>
+      <TableCell colSpan={7} className="px-3 py-3">
+        <div className="space-y-4">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="flex items-center space-x-4">
+              <Skeleton className="h-12 w-12 rounded-full" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[200px]" />
+                <Skeleton className="h-4 w-[150px]" />
               </div>
-            </th>
-            <th className="text-center p-4 font-medium text-gray-200">
-              <div className="flex items-center justify-center">
-                <Globe className="h-4 w-4 mr-1" /> EU
-              </div>
-            </th>
-            <th className="text-center p-4 font-medium text-gray-200">
-              <div className="flex items-center justify-center">
-                <Globe className="h-4 w-4 mr-1" /> UK
-              </div>
-            </th>
-            <th className="text-center p-4 font-medium text-gray-200">
-              <div className="flex items-center justify-center">
-                <Globe className="h-4 w-4 mr-1" /> JP
-              </div>
-            </th>
-            <th className="text-center p-4 font-medium text-gray-200">
-              <div className="flex items-center justify-center">
-                <Globe className="h-4 w-4 mr-1" /> HK
-              </div>
-            </th>
-            <th className="text-center p-4 font-medium text-gray-200">Arbitrage</th>
-          </tr>
-        </thead>
-        <tbody>
-          {watches.map((watch) => (
-            <tr key={watch.id} className="border-t border-gray-700 hover:bg-white/5 transition-colors">
-              <td className="p-4">
-                <div className="flex items-center space-x-3">
-                  <div className="h-16 w-16 bg-gray-800 rounded-md overflow-hidden flex-shrink-0 border border-gray-700">
-                    <img 
-                      src={watch.image} 
-                      alt={`${watch.brand} ${watch.model}`}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <div className="font-medium text-white">{watch.brand} {watch.model}</div>
-                    <div className="text-sm text-gray-400">{watch.reference}</div>
-                  </div>
-                </div>
-              </td>
-              <td className="p-4 text-center">
-                <div className={`font-medium ${watch.arbitrage.bestSell === 'us' ? 'text-green-400' : 'text-gray-300'}`}>
-                  {formatCurrency(watch.prices.us)}
-                </div>
-              </td>
-              <td className="p-4 text-center">
-                <div className={`font-medium ${watch.arbitrage.bestSell === 'eu' ? 'text-green-400' : 'text-gray-300'}`}>
-                  {formatCurrency(watch.prices.eu)}
-                </div>
-              </td>
-              <td className="p-4 text-center">
-                <div className={`font-medium ${watch.arbitrage.bestSell === 'uk' ? 'text-green-400' : 'text-gray-300'}`}>
-                  {formatCurrency(watch.prices.uk)}
-                </div>
-              </td>
-              <td className="p-4 text-center">
-                <div className={`font-medium ${watch.arbitrage.bestSell === 'jp' ? 'text-green-400' : 'text-gray-300'}`}>
-                  {formatCurrency(watch.prices.jp)}
-                </div>
-              </td>
-              <td className="p-4 text-center">
-                <div className={`font-medium ${watch.arbitrage.bestSell === 'hk' ? 'text-green-400' : 'text-gray-300'}`}>
-                  {formatCurrency(watch.prices.hk)}
-                </div>
-              </td>
-              <td className="p-4">
-                <WatchArbitrageCell arbitrage={watch.arbitrage} />
-              </td>
-            </tr>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      </TableCell>
+    </TableRow>
+  );
+
+  const noDataRow = (
+    <TableRow>
+      <TableCell colSpan={7} className="text-center py-10">
+        <div className="text-muted-foreground">
+          No watch data available. Please check back later.
+        </div>
+      </TableCell>
+    </TableRow>
+  );
+
+  return (
+    <div className="overflow-auto bg-black/40 backdrop-blur-md border border-gray-800 rounded-xl">
+      <Table>
+        <TableHeader className="bg-black/60">
+          <TableRow>
+            <TableHead className="text-gray-300">Watch Model</TableHead>
+            <TableHead className="text-gray-300 text-center">US</TableHead>
+            <TableHead className="text-gray-300 text-center">Europe</TableHead>
+            <TableHead className="text-gray-300 text-center">UK</TableHead>
+            <TableHead className="text-gray-300 text-center">Japan</TableHead>
+            <TableHead className="text-gray-300 text-center">Hong Kong</TableHead>
+            <TableHead className="text-gray-300 text-center">Best Arbitrage</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {isLoading ? (
+            renderedSkeleton
+          ) : watches.length === 0 ? (
+            noDataRow
+          ) : (
+            watches.map((watch) => (
+              <TableRow key={watch.id} className="border-t border-gray-800 hover:bg-black/30">
+                <TableCell className="px-4 py-3">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={watch.image}
+                      alt={`${watch.brand} ${watch.model}`}
+                      className="w-16 h-16 object-cover rounded-md"
+                    />
+                    <div>
+                      <h3 className="font-bold text-white">{watch.brand} {watch.model}</h3>
+                      <p className="text-sm text-gray-400">Ref. {watch.reference}</p>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="text-center text-white py-3">
+                  {formatCurrency(watch.prices.us)}
+                </TableCell>
+                <TableCell className="text-center text-white py-3">
+                  {formatCurrency(watch.prices.eu)}
+                </TableCell>
+                <TableCell className="text-center text-white py-3">
+                  {formatCurrency(watch.prices.uk)}
+                </TableCell>
+                <TableCell className="text-center text-white py-3">
+                  {formatCurrency(watch.prices.jp)}
+                </TableCell>
+                <TableCell className="text-center text-white py-3">
+                  {formatCurrency(watch.prices.hk)}
+                </TableCell>
+                <TableCell className="py-3">
+                  <WatchArbitrageCell arbitrage={watch.arbitrage} />
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 };

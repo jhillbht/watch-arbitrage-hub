@@ -1,15 +1,41 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { mockWatches } from '@/data/mockWatches';
 import ComparisonFilters from './comparison/ComparisonFilters';
 import WatchListingTable from './comparison/WatchListingTable';
+import { fetchWatches } from '@/services/WatchDataService';
+import { Watch } from '@/types/watch';
+import { useToast } from '@/hooks/use-toast';
 
 const PriceComparison = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [watches, setWatches] = useState<Watch[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
   
-  const filteredWatches = mockWatches.filter(watch => 
+  useEffect(() => {
+    const loadWatches = async () => {
+      try {
+        setLoading(true);
+        const watchData = await fetchWatches();
+        setWatches(watchData);
+      } catch (error) {
+        console.error('Error loading watches:', error);
+        toast({
+          title: 'Error',
+          description: 'Failed to load watch data. Please try again later.',
+          variant: 'destructive'
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadWatches();
+  }, [toast]);
+  
+  const filteredWatches = watches.filter(watch => 
     watch.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
     watch.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
     watch.reference.toLowerCase().includes(searchTerm.toLowerCase())
@@ -40,7 +66,7 @@ const PriceComparison = () => {
           onSearchChange={setSearchTerm}
         />
         
-        <WatchListingTable watches={filteredWatches} />
+        <WatchListingTable watches={filteredWatches} isLoading={loading} />
         
         <div className="mt-8 text-center">
           <Button className="bg-watch-blue hover:bg-blue-600 text-white">

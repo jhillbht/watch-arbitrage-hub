@@ -9,13 +9,196 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      watch_arbitrage: {
+        Row: {
+          best_buy: string
+          best_sell: string
+          calculated_at: string
+          id: string
+          profit: number
+          roi: number
+          watch_id: string
+        }
+        Insert: {
+          best_buy: string
+          best_sell: string
+          calculated_at?: string
+          id?: string
+          profit: number
+          roi: number
+          watch_id: string
+        }
+        Update: {
+          best_buy?: string
+          best_sell?: string
+          calculated_at?: string
+          id?: string
+          profit?: number
+          roi?: number
+          watch_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watch_arbitrage_watch_id_fkey"
+            columns: ["watch_id"]
+            isOneToOne: true
+            referencedRelation: "watches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      watch_historical_prices: {
+        Row: {
+          currency: string
+          date: string
+          id: string
+          price: number
+          region: string
+          watch_id: string
+        }
+        Insert: {
+          currency?: string
+          date: string
+          id?: string
+          price: number
+          region: string
+          watch_id: string
+        }
+        Update: {
+          currency?: string
+          date?: string
+          id?: string
+          price?: number
+          region?: string
+          watch_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watch_historical_prices_watch_id_fkey"
+            columns: ["watch_id"]
+            isOneToOne: false
+            referencedRelation: "watches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      watch_market_depth: {
+        Row: {
+          average_time_to_sell: number
+          buy_orders: number
+          id: string
+          last_updated: string
+          liquidity_score: number
+          market: string
+          sell_orders: number
+          watch_id: string
+        }
+        Insert: {
+          average_time_to_sell: number
+          buy_orders: number
+          id?: string
+          last_updated?: string
+          liquidity_score: number
+          market: string
+          sell_orders: number
+          watch_id: string
+        }
+        Update: {
+          average_time_to_sell?: number
+          buy_orders?: number
+          id?: string
+          last_updated?: string
+          liquidity_score?: number
+          market?: string
+          sell_orders?: number
+          watch_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watch_market_depth_watch_id_fkey"
+            columns: ["watch_id"]
+            isOneToOne: false
+            referencedRelation: "watches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      watch_prices: {
+        Row: {
+          currency: string
+          id: string
+          last_updated: string
+          price: number
+          region: string
+          watch_id: string
+        }
+        Insert: {
+          currency?: string
+          id?: string
+          last_updated?: string
+          price: number
+          region: string
+          watch_id: string
+        }
+        Update: {
+          currency?: string
+          id?: string
+          last_updated?: string
+          price?: number
+          region?: string
+          watch_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watch_prices_watch_id_fkey"
+            columns: ["watch_id"]
+            isOneToOne: false
+            referencedRelation: "watches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      watches: {
+        Row: {
+          brand: string
+          created_at: string
+          id: string
+          image: string | null
+          model: string
+          reference: string
+          updated_at: string
+        }
+        Insert: {
+          brand: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          model: string
+          reference: string
+          updated_at?: string
+        }
+        Update: {
+          brand?: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          model?: string
+          reference?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_watch_with_data: {
+        Args: {
+          watch_id: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
