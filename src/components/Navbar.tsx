@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight, Server } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePremium } from '@/hooks/use-premium';
 import { Crown } from 'lucide-react';
@@ -56,6 +56,9 @@ const Navbar = () => {
           </Link>
           <Link to="/pricing" className="text-white hover:text-watch-blue transition-colors font-medium">
             Pricing
+          </Link>
+          <Link to="/mcp-server" className="text-white hover:text-watch-blue transition-colors font-medium flex items-center">
+            <Server className="h-4 w-4 mr-1" /> MCP Server
           </Link>
           <Link 
             to="/premium" 
@@ -118,6 +121,13 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Pricing
+            </Link>
+            <Link 
+              to="/mcp-server" 
+              className="text-white py-2 hover:text-watch-blue flex items-center"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Server className="h-4 w-4 mr-1" /> MCP Server
             </Link>
             <hr className="my-2 border-gray-700" />
             <Link 

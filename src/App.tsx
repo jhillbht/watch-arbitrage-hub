@@ -13,6 +13,7 @@ import Auth from './pages/Auth';
 import PremiumFeatures from './pages/PremiumFeatures';
 import Features from './pages/Features';
 import Pricing from './pages/Pricing';
+import McpServer from './pages/McpServer';
 import { PremiumProvider } from './hooks/use-premium';
 
 // Use this component to conditionally add padding based on route
@@ -45,6 +46,7 @@ function App() {
               <Route path="/premium" element={<PremiumFeatures />} />
               <Route path="/features" element={<Features />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/mcp-server" element={<McpServer />} />
             </Routes>
           </PageWrapper>
           <Footer />
