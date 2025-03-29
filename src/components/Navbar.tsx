@@ -33,28 +33,28 @@ const Navbar = () => {
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 md:px-8 lg:px-12 py-4 ${
-        isScrolled ? 'bg-white/90 backdrop-blur-sm shadow-sm' : 'bg-transparent'
+        isScrolled ? 'bg-black/80 backdrop-blur-sm shadow-sm' : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-watch-darkGray">WatchArbitrage</span>
+          <span className="text-2xl font-bold text-white">WatchArbitrage</span>
           <span className="text-sm bg-watch-blue text-white px-1.5 py-0.5 rounded">Pro</span>
         </Link>
         
         <div className="hidden md:flex items-center space-x-8">
-          <Link to="/dashboard" className="text-gray-600 hover:text-watch-blue transition-colors">
+          <Link to="/dashboard" className="text-gray-300 hover:text-watch-blue transition-colors">
             Dashboard
           </Link>
-          <Link to="/features" className="text-gray-600 hover:text-watch-blue transition-colors">
+          <Link to="/features" className="text-gray-300 hover:text-watch-blue transition-colors">
             Features
           </Link>
-          <Link to="/pricing" className="text-gray-600 hover:text-watch-blue transition-colors">
+          <Link to="/pricing" className="text-gray-300 hover:text-watch-blue transition-colors">
             Pricing
           </Link>
           <Link 
             to="/premium" 
-            className="flex items-center px-4 py-2 rounded hover:bg-gray-100 transition-colors"
+            className="flex items-center px-4 py-2 rounded hover:bg-gray-800/60 transition-colors text-gray-300"
           >
             <span className="mr-1">Premium</span>
             {isPremium && <Crown className="h-3 w-3 text-amber-500" />}
@@ -63,7 +63,7 @@ const Navbar = () => {
         
         <div className="hidden md:flex items-center space-x-4">
           <Link to="/auth">
-            <Button variant="outline" className="border-watch-blue text-watch-blue hover:bg-watch-lightBlue hover:text-watch-blue">
+            <Button variant="outline" className="border-watch-blue text-white hover:bg-watch-blue/20 hover:text-white">
               Sign In
             </Button>
           </Link>
@@ -75,7 +75,7 @@ const Navbar = () => {
         </div>
         
         <button 
-          className="md:hidden text-gray-700" 
+          className="md:hidden text-white" 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <X /> : <Menu />}
@@ -84,30 +84,30 @@ const Navbar = () => {
       
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg p-4 border-t animate-fade-in">
+        <div className="md:hidden absolute top-16 left-0 right-0 bg-black/90 shadow-lg p-4 border-t border-gray-800 animate-fade-in">
           <div className="flex flex-col space-y-4 px-4">
             <Link 
               to="/dashboard" 
-              className="text-gray-700 py-2 hover:text-watch-blue"
+              className="text-gray-300 py-2 hover:text-watch-blue"
               onClick={() => setIsMenuOpen(false)}
             >
               Dashboard
             </Link>
             <Link 
               to="/features" 
-              className="text-gray-700 py-2 hover:text-watch-blue"
+              className="text-gray-300 py-2 hover:text-watch-blue"
               onClick={() => setIsMenuOpen(false)}
             >
               Features
             </Link>
             <Link 
               to="/pricing" 
-              className="text-gray-700 py-2 hover:text-watch-blue"
+              className="text-gray-300 py-2 hover:text-watch-blue"
               onClick={() => setIsMenuOpen(false)}
             >
               Pricing
             </Link>
-            <hr className="my-2" />
+            <hr className="my-2 border-gray-700" />
             <Link 
               to="/auth" 
               className="text-watch-blue py-2 font-medium"

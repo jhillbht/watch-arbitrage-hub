@@ -5,9 +5,9 @@ import PriceComparison from '@/components/PriceComparison';
 
 const Home = () => {
   return (
-    <div>
+    <div className="bg-black text-white min-h-screen">
       <Hero />
-      <main className="container mx-auto px-4 py-12">
+      <main>
         <PriceComparison />
       </main>
     </div>
