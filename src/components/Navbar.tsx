@@ -33,28 +33,30 @@ const Navbar = () => {
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 md:px-8 lg:px-12 py-4 ${
-        isScrolled ? 'bg-black/80 backdrop-blur-sm shadow-sm' : 'bg-transparent'
+        isScrolled 
+          ? 'bg-black/90 backdrop-blur-sm shadow-md' 
+          : 'bg-black/70 backdrop-blur-md'
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-white">WatchArbitrage</span>
+          <span className="text-2xl font-bold text-white">ChronoMarket</span>
           <span className="text-sm bg-watch-blue text-white px-1.5 py-0.5 rounded">Pro</span>
         </Link>
         
         <div className="hidden md:flex items-center space-x-8">
-          <Link to="/dashboard" className="text-gray-300 hover:text-watch-blue transition-colors">
+          <Link to="/dashboard" className="text-white hover:text-watch-blue transition-colors font-medium">
             Dashboard
           </Link>
-          <Link to="/features" className="text-gray-300 hover:text-watch-blue transition-colors">
+          <Link to="/features" className="text-white hover:text-watch-blue transition-colors font-medium">
             Features
           </Link>
-          <Link to="/pricing" className="text-gray-300 hover:text-watch-blue transition-colors">
+          <Link to="/pricing" className="text-white hover:text-watch-blue transition-colors font-medium">
             Pricing
           </Link>
           <Link 
             to="/premium" 
-            className="flex items-center px-4 py-2 rounded hover:bg-gray-800/60 transition-colors text-gray-300"
+            className="flex items-center px-4 py-2 rounded hover:bg-gray-800/60 transition-colors text-white font-medium"
           >
             <span className="mr-1">Premium</span>
             {isPremium && <Crown className="h-3 w-3 text-amber-500" />}
@@ -63,7 +65,7 @@ const Navbar = () => {
         
         <div className="hidden md:flex items-center space-x-4">
           <Link to="/auth">
-            <Button variant="outline" className="border-watch-blue text-white hover:bg-watch-blue/20 hover:text-white">
+            <Button variant="outline" className="border-white text-white hover:bg-white/20 hover:text-white">
               Sign In
             </Button>
           </Link>
@@ -84,25 +86,25 @@ const Navbar = () => {
       
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 right-0 bg-black/90 shadow-lg p-4 border-t border-gray-800 animate-fade-in">
+        <div className="md:hidden absolute top-16 left-0 right-0 bg-black/95 shadow-lg p-4 border-t border-gray-800 animate-fade-in">
           <div className="flex flex-col space-y-4 px-4">
             <Link 
               to="/dashboard" 
-              className="text-gray-300 py-2 hover:text-watch-blue"
+              className="text-white py-2 hover:text-watch-blue"
               onClick={() => setIsMenuOpen(false)}
             >
               Dashboard
             </Link>
             <Link 
               to="/features" 
-              className="text-gray-300 py-2 hover:text-watch-blue"
+              className="text-white py-2 hover:text-watch-blue"
               onClick={() => setIsMenuOpen(false)}
             >
               Features
             </Link>
             <Link 
               to="/pricing" 
-              className="text-gray-300 py-2 hover:text-watch-blue"
+              className="text-white py-2 hover:text-watch-blue"
               onClick={() => setIsMenuOpen(false)}
             >
               Pricing

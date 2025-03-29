@@ -49,13 +49,13 @@ const DashboardHeader = ({ activeSection, isPremiumUser }: DashboardHeaderProps)
 
   return (
     <header 
-      className={`sticky top-0 z-10 w-full backdrop-blur-sm border-b px-4 py-3 flex items-center justify-between transition-all duration-300 ${
-        isScrolled ? 'bg-background/95 shadow-sm' : 'bg-background/80'
+      className={`sticky top-0 z-10 w-full backdrop-blur-md border-b border-gray-800 px-4 py-3 flex items-center justify-between transition-all duration-300 ${
+        isScrolled ? 'bg-gray-950/95 shadow-sm' : 'bg-gray-950/80'
       }`}
     >
       <div className="flex items-center gap-3">
         <SidebarTrigger className="lg:hidden" />
-        <h1 className="text-xl font-semibold hidden sm:block">
+        <h1 className="text-xl font-semibold hidden sm:block text-white">
           {sectionTitles[activeSection] || 'Dashboard'}
         </h1>
       </div>
@@ -66,7 +66,7 @@ const DashboardHeader = ({ activeSection, isPremiumUser }: DashboardHeaderProps)
           <Input
             type="search"
             placeholder="Search watches, brands..."
-            className="w-full pl-9 bg-background/60"
+            className="w-full pl-9 bg-gray-900/60 border-gray-800 text-white placeholder:text-gray-400"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -74,7 +74,7 @@ const DashboardHeader = ({ activeSection, isPremiumUser }: DashboardHeaderProps)
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative">
+            <Button variant="ghost" size="icon" className="relative text-gray-300 hover:text-white">
               <Bell className="h-5 w-5" />
               {isPremiumUser && (
                 <span className="absolute -right-0.5 -top-0.5 flex h-3 w-3">
