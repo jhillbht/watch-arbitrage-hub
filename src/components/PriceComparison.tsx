@@ -20,7 +20,7 @@ const PriceComparison = () => {
       {/* Luxury watch background with overlay */}
       <div className="absolute inset-0 -z-10">
         <img 
-          src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+          src="https://images.unsplash.com/photo-1587925358603-c2eea5305bbc?auto=format&fit=crop&q=80" 
           alt="Luxury watches" 
           className="w-full h-full object-cover"
         />
@@ -40,12 +40,10 @@ const PriceComparison = () => {
           onSearchChange={setSearchTerm}
         />
         
-        <div className="bg-black/50 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden shadow-xl">
-          <WatchListingTable watches={filteredWatches} />
-        </div>
+        <WatchListingTable watches={filteredWatches} />
         
         <div className="mt-8 text-center">
-          <Button className="button-premium">
+          <Button className="bg-watch-blue hover:bg-blue-600 text-white">
             View Full Market Analysis <ChevronDown className="ml-2 h-4 w-4" />
           </Button>
         </div>
