@@ -10,7 +10,7 @@ const Hero = () => {
       {/* Full-width hero image background */}
       <div className="absolute inset-0 -z-10">
         <img 
-          src="/lovable-uploads/4944f73a-1679-48ec-a0ba-651479454299.png" 
+          src="/lovable-uploads/babf4b0d-4c41-495d-b4a2-78b820385bd1.png" 
           alt="Luxury watch background" 
           className="w-full h-full object-cover"
         />
