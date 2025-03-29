@@ -68,7 +68,7 @@ const Navbar = () => {
         
         <div className="hidden md:flex items-center space-x-4">
           <Link to="/auth">
-            <Button variant="outline" className="border-gray-800 bg-black text-watch-blue hover:bg-black/80 hover:text-watch-blue">
+            <Button variant="sign-in" className="border-gray-800 bg-black text-watch-blue hover:bg-black/80 hover:text-watch-blue">
               Sign In
             </Button>
           </Link>
