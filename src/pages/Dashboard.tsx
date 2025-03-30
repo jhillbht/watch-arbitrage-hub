@@ -182,8 +182,8 @@ const Dashboard = () => {
         
         <SidebarInset className="flex flex-col bg-gray-950">
           <DashboardHeader 
-            activeSection={activeSection} 
-            isPremiumUser={isPremiumUser} 
+            activeTab={activeSection} 
+            onChange={setActiveSection} 
           />
           
           <div className="flex-1 overflow-auto p-6">

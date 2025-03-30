@@ -43,7 +43,7 @@ export const fetchWatches = async (): Promise<Watch[]> => {
       };
 
       return {
-        id: Number(item.id.substring(0, 8), 16), // Use part of UUID as numeric ID
+        id: Number(item.id.substring(0, 8)), // Use part of UUID as numeric ID
         brand: item.brand,
         model: item.model,
         reference: item.reference,
@@ -86,7 +86,7 @@ export const fetchWatchWithPremiumData = async (watchId: string): Promise<Watch 
 
     // Transform the data into the Watch type with correct type assertions
     return {
-      id: Number(watchData.id.substring(0, 8), 16), // Use part of UUID as numeric ID
+      id: Number(watchData.id.substring(0, 8)), // Use part of UUID as numeric ID
       brand: watchData.brand,
       model: watchData.model,
       reference: watchData.reference,
