@@ -1,15 +1,16 @@
 
 import { useState } from 'react';
-import { RefreshCw, CheckCircle, AlertCircle, Bug } from 'lucide-react';
+import { RefreshCw, CheckCircle, AlertCircle, Bug, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { triggerDataFetch } from '@/services/WatchDataService';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { triggerDataFetch, verifyWatchChartsAPI } from '@/services/WatchDataService';
 import { useToast } from '@/hooks/use-toast';
 
 const DataFetcher = () => {
   const [isFetching, setIsFetching] = useState(false);
-  const [testMode, setTestMode] = useState(false);
+  const [testMode, setTestMode] = useState(true); // Default to test mode for now
   const [debugMode, setDebugMode] = useState(false);
   const [lastFetchStatus, setLastFetchStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [lastFetchTime, setLastFetchTime] = useState<Date | null>(null);
@@ -82,7 +83,21 @@ const DataFetcher = () => {
               checked={testMode}
               onCheckedChange={setTestMode}
             />
-            <Label htmlFor="data-test-mode" className="text-sm text-gray-300">Test Mode</Label>
+            <Label htmlFor="data-test-mode" className="text-sm text-gray-300">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger className="flex items-center">
+                    Test Mode <Info className="ml-1 h-3 w-3 text-gray-400" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="w-60 text-xs">
+                      Test mode uses mock data for development. 
+                      Enable this while the API connection is being set up.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </Label>
           </div>
           <div className="flex items-center space-x-2">
             <Switch
@@ -100,7 +115,7 @@ const DataFetcher = () => {
         <Button
           onClick={handleFetchData}
           disabled={isFetching}
-          className="bg-watch-blue hover:bg-blue-700"
+          className="bg-purple-600 hover:bg-purple-700"
         >
           {isFetching ? (
             <>

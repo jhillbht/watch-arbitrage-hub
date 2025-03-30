@@ -57,12 +57,12 @@ const Dashboard = () => {
               <div className="flex items-center justify-center mb-2">
                 <img 
                   src="/placeholder.svg" 
-                  alt="WatchArbitrage Pro" 
+                  alt="ChronoMarkets Pro" 
                   className="h-8 w-auto" 
                 />
               </div>
-              <h2 className="text-lg font-bold tracking-tight">WatchArbitrage</h2>
-              <div className="text-xs font-medium bg-watch-blue text-white px-2 py-0.5 rounded-full ml-2">Pro</div>
+              <h2 className="text-lg font-bold tracking-tight">ChronoMarkets</h2>
+              <div className="text-xs font-medium bg-purple-600 text-white px-2 py-0.5 rounded-full ml-2">Pro</div>
             </Link>
           </SidebarHeader>
 
@@ -123,7 +123,7 @@ const Dashboard = () => {
                       >
                         <Calculator />
                         <span>Premium Tools</span>
-                        <div className="ml-auto bg-watch-blue/10 text-watch-blue text-xs px-1.5 py-0.5 rounded">
+                        <div className="ml-auto bg-purple-600/10 text-purple-600 text-xs px-1.5 py-0.5 rounded">
                           Pro
                         </div>
                       </SidebarMenuButton>
