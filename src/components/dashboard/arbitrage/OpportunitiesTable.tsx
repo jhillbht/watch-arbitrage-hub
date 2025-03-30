@@ -1,7 +1,6 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { formatCurrency } from '@/utils/formatters';
 
 interface Opportunity {
@@ -44,7 +43,6 @@ const OpportunitiesTable = ({
               <TableHead className="text-right">Sell Price</TableHead>
               <TableHead className="text-right">ROI</TableHead>
               <TableHead className="text-right">Profit</TableHead>
-              <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -53,7 +51,8 @@ const OpportunitiesTable = ({
               .map((opportunity) => (
                 <TableRow 
                   key={opportunity.id}
-                  className={selectedOpportunityId === opportunity.id ? 'bg-muted' : ''}
+                  className={`cursor-pointer ${selectedOpportunityId === opportunity.id ? 'bg-muted' : ''}`}
+                  onClick={() => onOpportunitySelect(opportunity)}
                 >
                   <TableCell className="font-medium">
                     {opportunity.brand} {opportunity.model}
@@ -63,15 +62,6 @@ const OpportunitiesTable = ({
                   <TableCell className="text-right">{formatCurrency(opportunity.sellPrice)}</TableCell>
                   <TableCell className="text-right text-green-600">+{opportunity.roi}%</TableCell>
                   <TableCell className="text-right">{formatCurrency(opportunity.potentialProfit)}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => onOpportunitySelect(opportunity)}
-                    >
-                      View
-                    </Button>
-                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
