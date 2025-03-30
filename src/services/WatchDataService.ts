@@ -1,242 +1,232 @@
 
-import { supabase } from "@/integrations/supabase/client";
-import { Watch } from "@/types/watch";
-import { mockWatches } from "@/data/mockWatches";
+// This is an API service for retrieving watch market data
+// Currently the implementation uses simulated data for development
+// It can be connected to a real data provider API (like Watch Charts) when ready
 
-export const fetchWatches = async (): Promise<Watch[]> => {
-  try {
-    // Try to fetch from supabase
-    const { data, error } = await supabase
-      .from('watches')
-      .select(`
-        id,
-        brand,
-        model,
-        reference,
-        image,
-        watch_prices (region, price),
-        watch_arbitrage (best_buy, best_sell, profit, roi)
-      `);
+import { Watch, WatchPrice, WatchArbitrage, WatchHistoricalPrice, WatchMarketDepth, WatchPremiumData } from '@/types/watch';
 
-    if (error) {
-      console.error('Error fetching watches:', error);
-      // Fall back to mock data
-      console.log('Falling back to mock data');
-      return mockWatches;
+// Mock data for testing
+const mockWatches: Watch[] = [
+  {
+    id: 1,
+    brand: 'Rolex',
+    model: 'Submariner Date',
+    reference: '126610LN',
+    image: 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&q=80&w=2787&ixlib=rb-4.0.3',
+    prices: {
+      us: 14500,
+      eu: 13800,
+      uk: 13200,
+      jp: 12900,
+      hk: 13600
+    },
+    arbitrage: {
+      bestBuy: 'jp',
+      bestSell: 'us',
+      profit: 1600,
+      roi: 12.4
     }
-
-    if (!data || data.length === 0) {
-      // No data, return mock data
-      console.log('No data found, using mock data');
-      return mockWatches;
+  },
+  {
+    id: 2,
+    brand: 'Patek Philippe',
+    model: 'Nautilus',
+    reference: '5711/1A-010',
+    image: 'https://images.unsplash.com/photo-1655219282516-d95e4bddce80?auto=format&fit=crop&q=80&w=2940&ixlib=rb-4.0.3',
+    prices: {
+      us: 138000,
+      eu: 132000,
+      uk: 128000,
+      jp: 125000,
+      hk: 130000
+    },
+    arbitrage: {
+      bestBuy: 'jp',
+      bestSell: 'us',
+      profit: 13000,
+      roi: 10.4
     }
-
-    // Transform the data into the Watch type
-    const watches: Watch[] = data.map(item => {
-      // Extract prices from watch_prices array
-      const prices = item.watch_prices.reduce((acc: any, curr: any) => {
-        acc[curr.region as keyof typeof acc] = Number(curr.price);
-        return acc;
-      }, { us: 0, eu: 0, uk: 0, jp: 0, hk: 0 });
-
-      // Extract arbitrage data
-      const arbitrageData = item.watch_arbitrage[0] || {
-        best_buy: 'us',
-        best_sell: 'us',
-        profit: 0,
-        roi: 0
-      };
-
-      return {
-        id: Number(item.id.substring(0, 8)), // Use part of UUID as numeric ID
-        brand: item.brand,
-        model: item.model,
-        reference: item.reference,
-        image: item.image,
-        prices: prices,
-        arbitrage: {
-          bestBuy: arbitrageData.best_buy,
-          bestSell: arbitrageData.best_sell,
-          profit: Number(arbitrageData.profit),
-          roi: Number(arbitrageData.roi)
-        }
-      };
-    });
-
-    return watches;
-  } catch (error) {
-    console.error('Error in fetchWatches:', error);
-    // Fall back to mock data in case of any error
-    console.log('Error occurred, using mock data');
-    return mockWatches;
+  },
+  {
+    id: 3,
+    brand: 'Audemars Piguet',
+    model: 'Royal Oak',
+    reference: '15500ST.OO.1220ST.01',
+    image: 'https://images.unsplash.com/photo-1694698656381-33df28398eee?auto=format&fit=crop&q=80&w=2988&ixlib=rb-4.0.3',
+    prices: {
+      us: 45000,
+      eu: 42000,
+      uk: 41500,
+      jp: 40000,
+      hk: 42500
+    },
+    arbitrage: {
+      bestBuy: 'jp',
+      bestSell: 'us',
+      profit: 5000,
+      roi: 12.5
+    }
   }
+];
+
+// Generate premium mock data for a watch
+const generateMockPremiumData = (watchId: number): WatchPremiumData => {
+  // Generate historical prices
+  const historicalPrices: WatchHistoricalPrice[] = [];
+  const today = new Date();
+  const regions = ['us', 'eu', 'uk', 'jp', 'hk'];
+  
+  // Create 6 months of data
+  for (let i = 0; i < 180; i += 30) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    
+    // Add an entry for each region
+    regions.forEach(region => {
+      // Base price depends on watch ID
+      let basePrice = watchId === 1 ? 15000 : watchId === 2 ? 140000 : 45000;
+      
+      // Add some fluctuation
+      const fluctuation = (Math.random() * 0.2) - 0.1; // -10% to +10%
+      const price = Math.round(basePrice * (1 + fluctuation));
+      
+      historicalPrices.push({
+        date: date.toISOString().split('T')[0], // Format as YYYY-MM-DD
+        price,
+        market: region
+      });
+    });
+  }
+  
+  // Generate market depth data
+  const marketDepth: WatchMarketDepth[] = regions.map(region => {
+    return {
+      market: region,
+      buyOrders: Math.floor(Math.random() * 50) + 10,
+      sellOrders: Math.floor(Math.random() * 50) + 10,
+      averageTimeToSell: Math.floor(Math.random() * 30) + 5,
+      liquidityScore: Math.floor(Math.random() * 10) + 1
+    };
+  });
+  
+  return {
+    historicalPrices,
+    marketDepth,
+    salesVelocity: Math.random() * 5, // 0-5 sales per day
+    dealerPremium: Math.random() * 0.15, // 0-15% premium
+    confidence: 0.7 + (Math.random() * 0.3) // 0.7-1.0 confidence
+  };
 };
 
-export const fetchWatchWithPremiumData = async (watchId: string): Promise<Watch | null> => {
+// Verify connection to the Watch Charts API
+export const verifyWatchChartsAPI = async (testMode: boolean = false, debugMode: boolean = false): Promise<{ 
+  success: boolean; 
+  message: string; 
+  count?: number;
+  test?: boolean;
+  details?: string;
+}> => {
+  if (testMode) {
+    // Simulate API connection in test mode
+    console.log('Test mode enabled, simulating successful API connection');
+    return { 
+      success: true, 
+      message: 'Test API connection successful', 
+      count: mockWatches.length,
+      test: true 
+    };
+  }
+  
+  // In a real implementation, this would make an actual API call
   try {
-    // Use the database function to get all watch data including premium data
-    const { data, error } = await supabase.rpc('get_watch_with_data', {
-      watch_id: watchId 
-    });
-
-    if (error) {
-      console.error('Error fetching watch with premium data:', error);
-      // Find the watch in mock data
-      const mockWatch = mockWatches.find(w => String(w.id) === watchId);
-      if (mockWatch) {
-        return {
-          ...mockWatch,
-          premiumData: {
-            historicalPrices: generateMockHistoricalPrices(),
-            marketDepth: generateMockMarketDepth(),
-            salesVelocity: Math.random() * 10,
-            dealerPremium: Math.random() * 15,
-            confidence: Math.random() * 0.9 + 0.1
-          }
-        };
-      }
-      return null;
+    // Simulating a real API call failing for demonstration
+    if (debugMode) {
+      console.log('Debug mode enabled, showing detailed error information');
+      return {
+        success: false,
+        message: 'Failed to connect to Watch Charts API',
+        details: 'HTTP 403 Forbidden - Invalid API key or insufficient permissions',
+        test: false
+      };
     }
-
-    if (!data) {
-      return null;
-    }
-
-    // Cast data to appropriate type and process it
-    const watchData = data as any;
-
-    // Transform the data into the Watch type with correct type assertions
-    return {
-      id: Number(watchData.id.substring(0, 8)), // Use part of UUID as numeric ID
-      brand: watchData.brand,
-      model: watchData.model,
-      reference: watchData.reference,
-      image: watchData.image,
-      prices: watchData.prices,
-      arbitrage: {
-        bestBuy: watchData.arbitrage.bestBuy,
-        bestSell: watchData.arbitrage.bestSell,
-        profit: Number(watchData.arbitrage.profit),
-        roi: Number(watchData.arbitrage.roi)
-      },
-      premiumData: watchData.premiumData ? {
-        historicalPrices: watchData.premiumData.historicalPrices || [],
-        marketDepth: watchData.premiumData.marketDepth || [],
-        salesVelocity: watchData.premiumData.salesVelocity || 0,
-        dealerPremium: watchData.premiumData.dealerPremium || 0,
-        confidence: watchData.premiumData.confidence || 0
-      } : undefined
+    
+    // This would be replaced with actual API validation code
+    return { 
+      success: false, 
+      message: 'API connection failed - no valid API key found', 
+      test: false
     };
   } catch (error) {
-    console.error('Error in fetchWatchWithPremiumData:', error);
-    // Fall back to mock data in case of any error
-    const mockWatch = mockWatches.find(w => String(w.id) === watchId);
-    if (mockWatch) {
-      return {
-        ...mockWatch,
-        premiumData: {
-          historicalPrices: generateMockHistoricalPrices(),
-          marketDepth: generateMockMarketDepth(),
-          salesVelocity: Math.random() * 10,
-          dealerPremium: Math.random() * 15,
-          confidence: Math.random() * 0.9 + 0.1
-        }
-      };
-    }
-    return null;
+    console.error('Error verifying API connection:', error);
+    return { 
+      success: false, 
+      message: error instanceof Error ? error.message : 'Unknown error', 
+      test: false,
+      details: debugMode ? String(error) : undefined
+    };
   }
 };
 
-export const triggerDataFetch = async (testMode: boolean = false, debug: boolean = false): Promise<boolean> => {
+// Trigger data fetch from the API
+export const triggerDataFetch = async (testMode: boolean = false, debugMode: boolean = false): Promise<boolean> => {
+  if (testMode) {
+    // In test mode, simulate successful data fetch
+    console.log('Test mode enabled, simulating successful data fetch');
+    
+    // Simulate a delay for realism
+    await new Promise(resolve => setTimeout(resolve, 1200));
+    
+    return true;
+  }
+  
   try {
-    if (testMode) {
-      // In test mode, just simulate a successful data fetch
-      console.log('Test mode: Simulating successful data fetch');
-      return true;
+    // This would be replaced with actual API data fetching code
+    // For now, we simulate a failure if not in test mode
+    console.log('Attempting to fetch market data...');
+    
+    if (debugMode) {
+      console.log('Debug mode enabled - showing failed fetch with detailed info');
+      console.error('API Error: 403 Forbidden - Invalid API key or insufficient permissions');
     }
     
-    const { data, error } = await supabase.functions.invoke('fetch-watch-data', {
-      body: { testMode, debug }
-    });
-    
-    if (error) {
-      console.error('Error triggering data fetch:', error);
-      return false;
-    }
-    
-    console.log('Data fetch response:', data);
-    return data?.success;
+    return false;
   } catch (error) {
-    console.error('Error in triggerDataFetch:', error);
+    console.error('Error fetching data:', error);
     return false;
   }
 };
 
-// Function to verify API connection and log the response
-export const verifyWatchChartsAPI = async (testMode: boolean = false, debug: boolean = false): Promise<{
-  success: boolean, 
-  message: string, 
-  count?: number,
-  test?: boolean,
-  details?: string
-}> => {
-  try {
-    if (testMode) {
-      // In test mode, return a simulated success response
-      return { 
-        success: true, 
-        message: 'Test mode: API connection simulated successfully', 
-        test: true,
-        count: mockWatches.length
-      };
-    }
-    
-    const { data, error } = await supabase.functions.invoke('fetch-watch-data', {
-      body: { testMode, debug }
-    });
-    
-    if (error) {
-      console.error('Error verifying Watch Charts API:', error);
-      return { success: false, message: `Error: ${error.message}` };
-    }
-    
-    return { 
-      success: data?.success, 
-      message: data?.message || 'Unknown response', 
-      count: data?.count,
-      test: data?.test,
-      details: data?.details
-    };
-  } catch (error) {
-    console.error('Error in verifyWatchChartsAPI:', error);
-    return { success: false, message: `Exception: ${error instanceof Error ? error.message : String(error)}` };
+// Gets watch data with premium data if available
+export const getWatchData = async (includePremiumData: boolean = false): Promise<Watch[]> => {
+  // In a real implementation, this would fetch from an API
+  // For now, we return mock data
+  
+  if (!includePremiumData) {
+    return mockWatches;
   }
+  
+  // Add premium data to watches if requested
+  return mockWatches.map(watch => ({
+    ...watch,
+    premiumData: generateMockPremiumData(watch.id)
+  }));
 };
 
-// Helper functions to generate mock premium data
-function generateMockHistoricalPrices() {
-  const prices = [];
-  const now = new Date();
-  for (let i = 0; i < 12; i++) {
-    const date = new Date(now);
-    date.setMonth(now.getMonth() - i);
-    prices.push({
-      date: date.toISOString(),
-      price: Math.floor(10000 + Math.random() * 5000)
-    });
+export const fetchWatchDetailsById = async (watchId: number, includePremiumData: boolean = false): Promise<Watch | null> => {
+  // Find the watch in our mock data
+  const watch = mockWatches.find(w => w.id === watchId);
+  
+  if (!watch) {
+    return null;
   }
-  return prices.reverse();
-}
-
-function generateMockMarketDepth() {
-  return [
-    { type: 'ask', price: 15500, quantity: 3 },
-    { type: 'ask', price: 15000, quantity: 5 },
-    { type: 'ask', price: 14800, quantity: 2 },
-    { type: 'ask', price: 14500, quantity: 8 },
-    { type: 'bid', price: 14200, quantity: 4 },
-    { type: 'bid', price: 14000, quantity: 7 },
-    { type: 'bid', price: 13800, quantity: 3 },
-    { type: 'bid', price: 13500, quantity: 6 }
-  ];
-}
+  
+  // Add premium data if requested
+  if (includePremiumData) {
+    return {
+      ...watch,
+      premiumData: generateMockPremiumData(watch.id)
+    };
+  }
+  
+  return watch;
+};
