@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronRight, Server } from 'lucide-react';
@@ -12,7 +11,6 @@ const Navbar = () => {
   const { isPremium } = usePremium();
   const location = useLocation();
   
-  // All hooks are called before any conditional returns
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -22,10 +20,8 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Check if we're on the dashboard page
   const isDashboard = location.pathname.includes('/dashboard');
   
-  // Don't show the navbar on dashboard pages
   if (isDashboard) {
     return null;
   }
@@ -39,9 +35,12 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-white">ChronoMarket</span>
-          <span className="text-sm bg-purple-600 text-white px-1.5 py-0.5 rounded">Pro</span>
+        <Link to="/" className="flex items-center">
+          <img 
+            src="/logos/chrono-market-logo.svg" 
+            alt="ChronoMarket" 
+            className="h-10 md:h-12 w-auto" 
+          />
         </Link>
         
         <div className="hidden md:flex items-center space-x-8">
@@ -90,7 +89,6 @@ const Navbar = () => {
         </button>
       </div>
       
-      {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden absolute top-16 left-0 right-0 bg-black/95 shadow-lg p-4 border-t border-gray-800 animate-fade-in">
           <div className="flex flex-col space-y-4 px-4">
