@@ -40,17 +40,18 @@ const DashboardHeader = ({ activeTab, onChange }: DashboardHeaderProps) => {
           onValueChange={onChange}
           className="w-full sm:w-auto"
         >
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="market">Market Data</TabsTrigger>
             <TabsTrigger value="arbitrage">Arbitrage</TabsTrigger>
             <TabsTrigger value="watchlist">Watchlist</TabsTrigger>
+            <TabsTrigger value="settings">Account</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <ApiConnectionStatus />
-        <DataFetcher />
+        {activeTab !== "settings" && <DataFetcher />}
+        {/* ApiConnectionStatus is no longer displayed here */}
       </div>
     </div>
   );

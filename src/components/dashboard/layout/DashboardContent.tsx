@@ -4,6 +4,7 @@ import DashboardMarketData from '@/components/dashboard/DashboardMarketData';
 import DashboardWatchlist from '@/components/dashboard/DashboardWatchlist';
 import DashboardArbitrage from '@/components/dashboard/DashboardArbitrage';
 import DashboardPremiumTools from '@/components/dashboard/DashboardPremiumTools';
+import DashboardSettings from '@/components/dashboard/DashboardSettings';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 
 interface DashboardContentProps {
@@ -24,6 +25,7 @@ const DashboardContent = ({ activeSection, setActiveSection }: DashboardContentP
         {activeSection === 'watchlist' && <DashboardWatchlist />}
         {activeSection === 'arbitrage' && <DashboardArbitrage />}
         {activeSection === 'premium-tools' && <DashboardPremiumTools />}
+        {activeSection === 'settings' && <DashboardSettings />}
       </div>
     </div>
   );
