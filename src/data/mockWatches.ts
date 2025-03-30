@@ -1,5 +1,6 @@
 
 import { Watch } from "@/types/watch";
+import { getConsistentWatchImage } from "@/services/watch/watchImageService";
 
 export const mockWatches: Watch[] = [
   {
@@ -27,7 +28,7 @@ export const mockWatches: Watch[] = [
     brand: "Patek Philippe",
     model: "Nautilus",
     reference: "5711/1A-010",
-    image: "https://images.unsplash.com/photo-1629041236867-79a93b181068?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1627910016961-ee310ef7f8cb?auto=format&fit=crop&q=80",
     prices: {
       us: 142000,
       eu: 138000,
@@ -47,7 +48,7 @@ export const mockWatches: Watch[] = [
     brand: "Audemars Piguet",
     model: "Royal Oak",
     reference: "15500ST.OO.1220ST.01",
-    image: "https://images.unsplash.com/photo-1621370115429-cf6c8f4e0fd5?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1646192520737-36290f3341f0?auto=format&fit=crop&q=80",
     prices: {
       us: 79300,
       eu: 75000,
@@ -67,7 +68,7 @@ export const mockWatches: Watch[] = [
     brand: "Rolex",
     model: "Daytona",
     reference: "116500LN",
-    image: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80",
     prices: {
       us: 36500,
       eu: 34800,
@@ -87,7 +88,7 @@ export const mockWatches: Watch[] = [
     brand: "Omega",
     model: "Speedmaster Moonwatch Professional",
     reference: "310.30.42.50.01.001",
-    image: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1614947078261-73fafcefb9cb?auto=format&fit=crop&q=80",
     prices: {
       us: 7200,
       eu: 6900,

@@ -28,7 +28,7 @@ export const mockWatches: Watch[] = [
     brand: 'Patek Philippe',
     model: 'Nautilus',
     reference: '5711/1A-010',
-    image: 'https://images.unsplash.com/photo-1655219282516-d95e4bddce80?auto=format&fit=crop&q=80&w=2940&ixlib=rb-4.0.3',
+    image: 'https://images.unsplash.com/photo-1627910016961-ee310ef7f8cb?auto=format&fit=crop&q=80&w=2940&ixlib=rb-4.0.3',
     prices: {
       us: 138000,
       eu: 132000,
@@ -48,7 +48,7 @@ export const mockWatches: Watch[] = [
     brand: 'Audemars Piguet',
     model: 'Royal Oak',
     reference: '15500ST.OO.1220ST.01',
-    image: 'https://images.unsplash.com/photo-1694698656381-33df28398eee?auto=format&fit=crop&q=80&w=2988&ixlib=rb-4.0.3',
+    image: 'https://images.unsplash.com/photo-1646192520737-36290f3341f0?auto=format&fit=crop&q=80&w=2988&ixlib=rb-4.0.3',
     prices: {
       us: 45000,
       eu: 42000,
@@ -68,11 +68,14 @@ export const mockWatches: Watch[] = [
 // Image URLs for popular watches
 export const watchImageMap: Record<string, string> = {
   'Rolex|Daytona': 'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+  'Rolex|Submariner Date': 'https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=800&q=80',
+  'Rolex|GMT-Master II': 'https://images.unsplash.com/photo-1592435300631-6adee20e6abd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
   'Patek Philippe|Nautilus': 'https://images.unsplash.com/photo-1627910016961-ee310ef7f8cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+  'Patek Philippe|Aquanaut': 'https://images.unsplash.com/photo-1646380814052-97b0fdd387b8?auto=format&fit=crop&w=800&q=80',
   'Audemars Piguet|Royal Oak': 'https://images.unsplash.com/photo-1646192520737-36290f3341f0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
   'Omega|Speedmaster Moonwatch': 'https://images.unsplash.com/photo-1614947078261-73fafcefb9cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-  'Rolex|GMT-Master II': 'https://images.unsplash.com/photo-1592435300631-6adee20e6abd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-  'Cartier|Santos': 'https://images.unsplash.com/photo-1548171699-258c183348da?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
+  'Cartier|Santos': 'https://images.unsplash.com/photo-1548171699-258c183348da?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+  'Richard Mille|RM 11-03': 'https://images.unsplash.com/photo-1614164184841-2e0ad4705228?auto=format&fit=crop&w=800&q=80'
 };
 
 // Generate premium mock data for a watch
