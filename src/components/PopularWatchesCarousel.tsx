@@ -11,22 +11,24 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { popularWatches } from '@/data/popularWatches';
-import { getWatchImages } from '@/services/WatchDataService';
+import { fetchWatchDetailsById, getWatchImages } from '@/services/WatchDataService';
 import { useToast } from "@/components/ui/use-toast";
+import { Watch } from '@/types/watch';
 
 const PopularWatchesCarousel = () => {
   const [watches, setWatches] = useState(popularWatches);
   const { toast } = useToast();
   
   useEffect(() => {
-    const fetchWatchImages = async () => {
+    const fetchWatchData = async () => {
       try {
         // Create a copy of watches with updated image URLs
         const updatedWatches = [...popularWatches];
         
-        // Fetch images for each watch
+        // Fetch images for each watch from the test mode data
         for (let i = 0; i < updatedWatches.length; i++) {
           const watch = updatedWatches[i];
+          // Try to get matching test data based on brand and model
           const imageUrl = await getWatchImages(watch.brand, watch.model);
           if (imageUrl) {
             updatedWatches[i] = { ...watch, imageUrl };
@@ -35,16 +37,16 @@ const PopularWatchesCarousel = () => {
         
         setWatches(updatedWatches);
       } catch (error) {
-        console.error("Failed to fetch watch images:", error);
+        console.error("Failed to fetch watch data:", error);
         toast({
           title: "Error",
-          description: "Failed to load watch images",
+          description: "Failed to load watch data",
           variant: "destructive",
         });
       }
     };
     
-    fetchWatchImages();
+    fetchWatchData();
   }, [toast]);
   
   return (
