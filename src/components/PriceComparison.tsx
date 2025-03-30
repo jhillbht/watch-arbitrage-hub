@@ -1,11 +1,11 @@
-
-import { useState, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import ComparisonFilters from './comparison/ComparisonFilters';
-import WatchListingTable from './comparison/WatchListingTable';
-import { fetchWatches } from '@/services/WatchDataService';
+import { getWatchData } from '@/services/WatchDataService';
 import { Watch } from '@/types/watch';
+import WatchListingTable from '@/components/comparison/WatchListingTable';
+import ComparisonFilters from '@/components/comparison/ComparisonFilters';
+import { ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const PriceComparison = () => {
@@ -18,7 +18,7 @@ const PriceComparison = () => {
     const loadWatches = async () => {
       try {
         setLoading(true);
-        const watchData = await fetchWatches();
+        const watchData = await getWatchData();
         setWatches(watchData);
       } catch (error) {
         console.error('Error loading watches:', error);
