@@ -75,7 +75,7 @@ const PopularWatchesCarousel = () => {
             {watches.map((watch, index) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1">
-                  <Link to={`/dashboard?brand=${watch.brand}&model=${watch.model}`}>
+                  <Link to={`/dashboard?activeSection=market&brand=${encodeURIComponent(watch.brand)}&model=${encodeURIComponent(watch.model)}`}>
                     <Card className="overflow-hidden border border-gray-800 bg-black/70 backdrop-blur-sm hover:shadow-[0_0_15px_rgba(0,122,255,0.3)] transition-shadow duration-300 cursor-pointer group">
                       <CardContent className="p-4">
                         <AspectRatio ratio={1 / 1} className="mb-3 bg-gray-900 rounded-md overflow-hidden">

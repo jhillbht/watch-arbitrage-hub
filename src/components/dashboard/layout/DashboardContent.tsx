@@ -10,9 +10,16 @@ import DashboardHeader from '@/components/dashboard/DashboardHeader';
 interface DashboardContentProps {
   activeSection: string;
   setActiveSection: (section: string) => void;
+  initialBrand?: string | null;
+  initialModel?: string | null;
 }
 
-const DashboardContent = ({ activeSection, setActiveSection }: DashboardContentProps) => {
+const DashboardContent = ({ 
+  activeSection, 
+  setActiveSection,
+  initialBrand,
+  initialModel
+}: DashboardContentProps) => {
   return (
     <div className="flex flex-col bg-gray-950">
       <DashboardHeader 
@@ -21,7 +28,9 @@ const DashboardContent = ({ activeSection, setActiveSection }: DashboardContentP
       />
       
       <div className="flex-1 overflow-auto p-6">
-        {activeSection === 'market' && <DashboardMarketData />}
+        {activeSection === 'market' && (
+          <DashboardMarketData initialBrand={initialBrand} initialModel={initialModel} />
+        )}
         {activeSection === 'watchlist' && <DashboardWatchlist />}
         {activeSection === 'arbitrage' && <DashboardArbitrage />}
         {activeSection === 'premium-tools' && <DashboardPremiumTools />}
