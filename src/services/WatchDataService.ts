@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { Watch } from "@/types/watch";
 
@@ -115,10 +114,7 @@ export const fetchWatchWithPremiumData = async (watchId: string): Promise<Watch 
 export const triggerDataFetch = async (testMode: boolean = false): Promise<boolean> => {
   try {
     const { data, error } = await supabase.functions.invoke('fetch-watch-data', {
-      body: { 
-        apiKey: 'itHHiAqB6pa0DHn6mAvnJ5cwVgJZCpkK2zZG3HHf',
-        testMode
-      }
+      body: { testMode }
     });
     
     if (error) {
@@ -143,10 +139,7 @@ export const verifyWatchChartsAPI = async (testMode: boolean = false): Promise<{
 }> => {
   try {
     const { data, error } = await supabase.functions.invoke('fetch-watch-data', {
-      body: { 
-        apiKey: 'itHHiAqB6pa0DHn6mAvnJ5cwVgJZCpkK2zZG3HHf',
-        testMode
-      }
+      body: { testMode }
     });
     
     if (error) {

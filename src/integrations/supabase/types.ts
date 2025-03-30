@@ -9,6 +9,33 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      api_keys: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: number
+          key_name: string
+          key_value: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: number
+          key_name: string
+          key_value: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: number
+          key_name?: string
+          key_value?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       watch_arbitrage: {
         Row: {
           best_buy: string
@@ -193,6 +220,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_api_key: {
+        Args: {
+          p_key_name: string
+        }
+        Returns: string
+      }
       get_watch_with_data: {
         Args: {
           watch_id: string

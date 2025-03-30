@@ -1,5 +1,6 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.7.1";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -13,18 +14,44 @@ serve(async (req) => {
   }
 
   try {
+    // Initialize Supabase client with admin privileges to fetch the API key
+    const supabaseAdmin = createClient(
+      Deno.env.get("SUPABASE_URL") ?? '',
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? '',
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false,
+        },
+      }
+    );
+
     // Parse request body
-    const { apiKey, testMode } = await req.json();
+    const { testMode } = await req.json();
+    let apiKey;
+    
+    // Get API key from the database
+    const { data: keyData, error: keyError } = await supabaseAdmin.rpc('get_api_key', {
+      p_key_name: 'WATCH_CHARTS_API_KEY'
+    });
+    
+    if (keyError) {
+      console.error("Error fetching API key:", keyError);
+      apiKey = null;
+    } else {
+      apiKey = keyData;
+      console.log("Retrieved API key from database");
+    }
     
     if (!apiKey) {
-      console.error("Missing API key");
+      console.error("API key not found in database");
       return new Response(
-        JSON.stringify({ success: false, error: "Missing API key" }),
+        JSON.stringify({ success: false, error: "API key not found" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
       );
     }
     
-    console.log("Starting data fetch with API key:", apiKey);
+    console.log("Starting data fetch with API key from database");
     
     // If in test mode, return success without calling the actual API
     if (testMode) {
