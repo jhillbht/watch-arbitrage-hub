@@ -14,7 +14,7 @@ serve(async (req) => {
 
   try {
     // Parse request body
-    const { apiKey } = await req.json();
+    const { apiKey, testMode } = await req.json();
     
     if (!apiKey) {
       console.error("Missing API key");
@@ -26,10 +26,26 @@ serve(async (req) => {
     
     console.log("Starting data fetch with API key:", apiKey);
     
+    // If in test mode, return success without calling the actual API
+    if (testMode) {
+      console.log("Test mode enabled, returning mock data");
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: "Test connection successful",
+          count: 25,
+          test: true
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    
     // Fetch data from Watch Charts API
     try {
       // This is a placeholder URL - replace with the actual Watch Charts API endpoint
       const watchChartsUrl = "https://api.watchcharts.com/v2/watches";
+      
+      console.log(`Attempting to fetch data from ${watchChartsUrl}`);
       
       const response = await fetch(watchChartsUrl, {
         method: 'GET',
@@ -40,7 +56,21 @@ serve(async (req) => {
       });
       
       if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}: ${await response.text()}`);
+        const errorText = await response.text();
+        console.error(`API request failed with status ${response.status}: ${errorText}`);
+        
+        if (response.status === 403) {
+          return new Response(
+            JSON.stringify({ 
+              success: false, 
+              message: "Authentication failed: Invalid API key or insufficient permissions",
+              status: response.status
+            }),
+            { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 403 }
+          );
+        }
+        
+        throw new Error(`API request failed with status ${response.status}: ${errorText}`);
       }
       
       const watchData = await response.json();

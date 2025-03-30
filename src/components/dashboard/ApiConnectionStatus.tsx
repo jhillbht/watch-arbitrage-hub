@@ -1,18 +1,22 @@
 
 import { useState, useEffect } from 'react';
-import { RefreshCw, CheckCircle, AlertCircle } from 'lucide-react';
+import { RefreshCw, CheckCircle, AlertCircle, ExternalLink, Gift } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import { verifyWatchChartsAPI } from '@/services/WatchDataService';
 import { useToast } from '@/hooks/use-toast';
 
 const ApiConnectionStatus = () => {
   const [isChecking, setIsChecking] = useState(false);
+  const [testMode, setTestMode] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<{
     checked: boolean;
     success: boolean;
     message: string;
     count?: number;
+    test?: boolean;
   }>({
     checked: false,
     success: false,
@@ -23,18 +27,19 @@ const ApiConnectionStatus = () => {
   const checkApiConnection = async () => {
     setIsChecking(true);
     try {
-      const result = await verifyWatchChartsAPI();
+      const result = await verifyWatchChartsAPI(testMode);
       setConnectionStatus({
         checked: true,
         success: result.success,
         message: result.message,
-        count: result.count
+        count: result.count,
+        test: result.test
       });
       
       if (result.success) {
         toast({
-          title: 'API Connection Successful',
-          description: `Successfully connected to Watch Charts API. Retrieved data for ${result.count || 0} watches.`,
+          title: result.test ? 'Test Connection Successful' : 'API Connection Successful',
+          description: `${result.test ? 'Test mode: ' : ''}${result.message}. Retrieved data for ${result.count || 0} watches.`,
           variant: 'default',
         });
       } else {
@@ -71,19 +76,30 @@ const ApiConnectionStatus = () => {
       <CardHeader className="pb-2">
         <CardTitle className="text-lg flex items-center justify-between">
           <span>Watch Charts API Status</span>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={checkApiConnection}
-            disabled={isChecking}
-          >
-            {isChecking ? (
-              <RefreshCw className="h-4 w-4 animate-spin" />
-            ) : (
-              <RefreshCw className="h-4 w-4" />
-            )}
-            <span className="ml-2">Refresh</span>
-          </Button>
+          <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="test-mode"
+                checked={testMode}
+                onCheckedChange={setTestMode}
+                size="sm"
+              />
+              <Label htmlFor="test-mode" className="text-sm">Test Mode</Label>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={checkApiConnection}
+              disabled={isChecking}
+            >
+              {isChecking ? (
+                <RefreshCw className="h-4 w-4 animate-spin" />
+              ) : (
+                <RefreshCw className="h-4 w-4" />
+              )}
+              <span className="ml-2">Refresh</span>
+            </Button>
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -102,10 +118,24 @@ const ApiConnectionStatus = () => {
           <div>
             <p className={`font-medium ${connectionStatus.success ? 'text-green-600' : 'text-red-600'}`}>
               {connectionStatus.checked ? (connectionStatus.success ? 'Connected' : 'Connection Failed') : 'Checking...'}
+              {connectionStatus.test && (
+                <span className="ml-2 text-amber-500 text-xs font-normal">(Test Mode)</span>
+              )}
             </p>
             <p className="text-sm text-muted-foreground">{connectionStatus.message}</p>
             {connectionStatus.success && connectionStatus.count !== undefined && (
               <p className="text-sm mt-1">Retrieved data for <span className="font-semibold">{connectionStatus.count}</span> watches</p>
+            )}
+            
+            {!connectionStatus.success && !connectionStatus.test && (
+              <div className="mt-2 text-xs text-amber-500 flex items-center">
+                <Gift className="h-3 w-3 mr-1" />
+                <span>
+                  To use a working API, you need to <a href="https://watchcharts.com/developers" target="_blank" rel="noopener noreferrer" className="text-blue-500 underline inline-flex items-center">
+                    sign up for a Watch Charts API key <ExternalLink className="h-3 w-3 ml-0.5" />
+                  </a>
+                </span>
+              </div>
             )}
           </div>
         </div>

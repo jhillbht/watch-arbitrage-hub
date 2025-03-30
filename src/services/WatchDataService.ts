@@ -112,10 +112,13 @@ export const fetchWatchWithPremiumData = async (watchId: string): Promise<Watch 
   }
 };
 
-export const triggerDataFetch = async (): Promise<boolean> => {
+export const triggerDataFetch = async (testMode: boolean = false): Promise<boolean> => {
   try {
     const { data, error } = await supabase.functions.invoke('fetch-watch-data', {
-      body: { apiKey: 'itHHiAqB6pa0DHn6mAvnJ5cwVgJZCpkK2zZG3HHf' }
+      body: { 
+        apiKey: 'itHHiAqB6pa0DHn6mAvnJ5cwVgJZCpkK2zZG3HHf',
+        testMode
+      }
     });
     
     if (error) {
@@ -132,10 +135,18 @@ export const triggerDataFetch = async (): Promise<boolean> => {
 };
 
 // Function to verify API connection and log the response
-export const verifyWatchChartsAPI = async (): Promise<{success: boolean, message: string, count?: number}> => {
+export const verifyWatchChartsAPI = async (testMode: boolean = false): Promise<{
+  success: boolean, 
+  message: string, 
+  count?: number,
+  test?: boolean
+}> => {
   try {
     const { data, error } = await supabase.functions.invoke('fetch-watch-data', {
-      body: { apiKey: 'itHHiAqB6pa0DHn6mAvnJ5cwVgJZCpkK2zZG3HHf' }
+      body: { 
+        apiKey: 'itHHiAqB6pa0DHn6mAvnJ5cwVgJZCpkK2zZG3HHf',
+        testMode
+      }
     });
     
     if (error) {
@@ -146,7 +157,8 @@ export const verifyWatchChartsAPI = async (): Promise<{success: boolean, message
     return { 
       success: data?.success, 
       message: data?.message || 'Unknown response', 
-      count: data?.count 
+      count: data?.count,
+      test: data?.test 
     };
   } catch (error) {
     console.error('Error in verifyWatchChartsAPI:', error);
