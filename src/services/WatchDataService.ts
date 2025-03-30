@@ -69,6 +69,32 @@ const mockWatches: Watch[] = [
   }
 ];
 
+// Image URLs for popular watches
+const watchImageMap = {
+  'Rolex|Daytona': 'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+  'Patek Philippe|Nautilus': 'https://images.unsplash.com/photo-1627910016961-ee310ef7f8cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+  'Audemars Piguet|Royal Oak': 'https://images.unsplash.com/photo-1646192520737-36290f3341f0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+  'Omega|Speedmaster Moonwatch': 'https://images.unsplash.com/photo-1614947078261-73fafcefb9cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+  'Rolex|GMT-Master II': 'https://images.unsplash.com/photo-1592435300631-6adee20e6abd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+  'Cartier|Santos': 'https://images.unsplash.com/photo-1548171699-258c183348da?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
+};
+
+// Function to get watch images
+export const getWatchImages = async (brand: string, model: string): Promise<string> => {
+  // In a real implementation, this would call an API or database
+  // For now, we return the mock data from our mapping
+  const key = `${brand}|${model}`;
+  
+  // If we have a direct match in our mapping
+  if (watchImageMap[key]) {
+    return watchImageMap[key];
+  }
+  
+  // Fallback to a default image if no match is found
+  console.log(`No image found for ${key}, using default`);
+  return 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80';
+};
+
 // Generate premium mock data for a watch
 const generateMockPremiumData = (watchId: number): WatchPremiumData => {
   // Generate historical prices

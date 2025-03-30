@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Carousel,
@@ -11,8 +11,42 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { popularWatches } from '@/data/popularWatches';
+import { getWatchImages } from '@/services/WatchDataService';
+import { useToast } from "@/components/ui/use-toast";
 
 const PopularWatchesCarousel = () => {
+  const [watches, setWatches] = useState(popularWatches);
+  const { toast } = useToast();
+  
+  useEffect(() => {
+    const fetchWatchImages = async () => {
+      try {
+        // Create a copy of watches with updated image URLs
+        const updatedWatches = [...popularWatches];
+        
+        // Fetch images for each watch
+        for (let i = 0; i < updatedWatches.length; i++) {
+          const watch = updatedWatches[i];
+          const imageUrl = await getWatchImages(watch.brand, watch.model);
+          if (imageUrl) {
+            updatedWatches[i] = { ...watch, imageUrl };
+          }
+        }
+        
+        setWatches(updatedWatches);
+      } catch (error) {
+        console.error("Failed to fetch watch images:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load watch images",
+          variant: "destructive",
+        });
+      }
+    };
+    
+    fetchWatchImages();
+  }, [toast]);
+  
   return (
     <div className="relative w-full py-12">
       {/* Dark, luxury background */}
@@ -36,7 +70,7 @@ const PopularWatchesCarousel = () => {
           className="w-full"
         >
           <CarouselContent>
-            {popularWatches.map((watch, index) => (
+            {watches.map((watch, index) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1">
                   <Link to={`/dashboard?brand=${watch.brand}&model=${watch.model}`}>
