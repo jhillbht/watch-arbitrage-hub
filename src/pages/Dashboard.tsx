@@ -39,7 +39,7 @@ import DashboardHeader from '@/components/dashboard/DashboardHeader';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState<string>('market-data');
+  const [activeSection, setActiveSection] = useState<string>('market');
   // This would come from auth context in a real app
   const isPremiumUser = true;
 
@@ -84,8 +84,8 @@ const Dashboard = () => {
                   <SidebarMenuItem>
                     <SidebarMenuButton 
                       tooltip="Market Data" 
-                      isActive={activeSection === 'market-data'}
-                      onClick={() => setActiveSection('market-data')}
+                      isActive={activeSection === 'market'}
+                      onClick={() => setActiveSection('market')}
                     >
                       <Watch />
                       <span>Market Data</span>
@@ -187,7 +187,7 @@ const Dashboard = () => {
           />
           
           <div className="flex-1 overflow-auto p-6">
-            {activeSection === 'market-data' && <DashboardMarketData />}
+            {activeSection === 'market' && <DashboardMarketData />}
             {activeSection === 'watchlist' && <DashboardWatchlist />}
             {activeSection === 'arbitrage' && <DashboardArbitrage />}
             {activeSection === 'premium-tools' && <DashboardPremiumTools />}
