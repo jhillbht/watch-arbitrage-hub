@@ -1,8 +1,8 @@
 
-// Export all services from a single entry point
-export * from './DataProcessingTypes';
-export * from './DataCollectionService';
-export * from './ArbitrageService';
-export * from './PricingService';
-export * from './NotificationService';
-export * from './ExchangeRateService';
+// Export all services from organized subdirectories
+export * from './types';
+export * from './data-collection';
+export * from './arbitrage';
+export * from './pricing';
+export * from './notification';
+export * from './exchange';
