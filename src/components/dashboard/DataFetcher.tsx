@@ -76,7 +76,6 @@ const DataFetcher = () => {
             id="data-test-mode"
             checked={testMode}
             onCheckedChange={setTestMode}
-            size="sm"
           />
           <Label htmlFor="data-test-mode" className="text-sm text-gray-300">Test Mode</Label>
         </div>

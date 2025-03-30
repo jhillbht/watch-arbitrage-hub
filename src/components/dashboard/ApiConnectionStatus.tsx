@@ -82,7 +82,6 @@ const ApiConnectionStatus = () => {
                 id="test-mode"
                 checked={testMode}
                 onCheckedChange={setTestMode}
-                size="sm"
               />
               <Label htmlFor="test-mode" className="text-sm">Test Mode</Label>
             </div>
