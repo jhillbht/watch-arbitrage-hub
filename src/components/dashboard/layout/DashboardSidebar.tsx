@@ -25,11 +25,9 @@ const DashboardSidebar = ({
       <SidebarHeader className="flex flex-col items-center justify-center py-4">
         <Link to="/" className="flex items-center justify-center">
           <div className="flex items-center justify-center mb-2">
-            <img 
-              src="/logos/chrono-market-logo.svg" 
-              alt="ChronoMarkets Pro" 
-              className="h-10 w-auto" 
-            />
+            <span className="text-xl font-bold text-blue-500">Chrono</span>
+            <span className="text-xl font-bold text-gray-300">Market</span>
+            <span className="text-sm text-blue-500 ml-1">Pro</span>
           </div>
         </Link>
       </SidebarHeader>
