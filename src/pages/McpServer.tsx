@@ -2,7 +2,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Server, Globe, Shield, Gauge, Clock, Database, Cloud, RefreshCw, Lock, Bot, Cpu, Brain, Sparkles, Terminal, Workflow } from 'lucide-react';
+import { 
+  ArrowRight, 
+  Server, 
+  Globe, 
+  Shield, 
+  Clock, 
+  Database, 
+  Bot, 
+  Cpu, 
+  Brain, 
+  Terminal, 
+  Workflow,
+  BarChart3,
+  DollarSign,
+  Search,
+  Compare,
+  AlertCircle,
+  RefreshCw,
+  LayoutGrid,
+  PanelTop
+} from 'lucide-react';
 
 const McpServer = () => {
   return (
@@ -168,7 +188,7 @@ const McpServer = () => {
         </div>
       </section>
       
-      {/* Features section */}
+      {/* Features section - Updated with real tools */}
       <section className="py-16 px-6 bg-black/95">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -181,63 +201,176 @@ const McpServer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="premium-card p-6 rounded-xl">
               <div className="bg-watch-blue/10 p-3 rounded-lg inline-block mb-4">
-                <Globe className="h-6 w-6 text-watch-blue" />
+                <Search className="h-6 w-6 text-watch-blue" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Market Scanner</h3>
+              <h3 className="text-xl font-semibold mb-2">getWatchData</h3>
               <p className="text-gray-400">
-                AI agents can access real-time data from global watch markets, enabling automated discovery of pricing discrepancies and arbitrage opportunities.
+                Retrieve comprehensive data for any watch by reference number, brand, or model with real-time pricing from multiple markets and detailed specifications.
               </p>
             </div>
             
             <div className="premium-card p-6 rounded-xl">
               <div className="bg-watch-blue/10 p-3 rounded-lg inline-block mb-4">
-                <Database className="h-6 w-6 text-watch-blue" />
+                <BarChart3 className="h-6 w-6 text-watch-blue" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Price History API</h3>
+              <h3 className="text-xl font-semibold mb-2">getHistoricalPrices</h3>
               <p className="text-gray-400">
-                Access years of historical pricing data through a standardized API that AI agents can query for trend analysis and price prediction.
+                Access detailed price history for any watch with customizable timeframes (7d, 30d, 90d, 1y, 5y) and market segmentation for trend analysis.
               </p>
             </div>
             
             <div className="premium-card p-6 rounded-xl">
               <div className="bg-watch-blue/10 p-3 rounded-lg inline-block mb-4">
-                <RefreshCw className="h-6 w-6 text-watch-blue" />
+                <Compare className="h-6 w-6 text-watch-blue" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Arbitrage Calculator</h3>
+              <h3 className="text-xl font-semibold mb-2">findArbitrageOpportunities</h3>
               <p className="text-gray-400">
-                AI agents can use this tool to calculate potential profits, factoring in all costs like shipping, import duties, and platform fees.
+                Automatically identify price disparities across global markets, with built-in calculators for fees, shipping costs, and potential profit margins.
               </p>
             </div>
             
             <div className="premium-card p-6 rounded-xl">
               <div className="bg-watch-blue/10 p-3 rounded-lg inline-block mb-4">
-                <Cloud className="h-6 w-6 text-watch-blue" />
+                <DollarSign className="h-6 w-6 text-watch-blue" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Market Simulator</h3>
+              <h3 className="text-xl font-semibold mb-2">calculateROI</h3>
               <p className="text-gray-400">
-                Test trading strategies in a simulated environment before deploying AI agents with real funds in the market.
+                Calculate expected return on investment with comprehensive analysis of all transaction costs, holding periods, and market-specific fees.
               </p>
             </div>
             
             <div className="premium-card p-6 rounded-xl">
               <div className="bg-watch-blue/10 p-3 rounded-lg inline-block mb-4">
-                <Lock className="h-6 w-6 text-watch-blue" />
+                <AlertCircle className="h-6 w-6 text-watch-blue" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Secure Authentication</h3>
+              <h3 className="text-xl font-semibold mb-2">createPriceAlert</h3>
               <p className="text-gray-400">
-                Industry-standard authentication ensures only authorized AI agents can access your account and trading capabilities.
+                Set up automated alerts for specific price points, market movements, or arbitrage thresholds with customizable notification parameters.
               </p>
             </div>
             
             <div className="premium-card p-6 rounded-xl">
               <div className="bg-watch-blue/10 p-3 rounded-lg inline-block mb-4">
-                <Sparkles className="h-6 w-6 text-watch-blue" />
+                <LayoutGrid className="h-6 w-6 text-watch-blue" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Decision Tools</h3>
+              <h3 className="text-xl font-semibold mb-2">getMarketOverview</h3>
               <p className="text-gray-400">
-                Advanced tools that help AI agents make buy/sell decisions based on market sentiment, volume trends, and price volatility.
+                Access aggregated market statistics with real-time data on top-performing brands, models, and market segments with trend indicators.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* API Schema Section - New */}
+      <section className="py-16 px-6 bg-black/90 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-watch-blue text-sm font-medium uppercase tracking-wider">Technical Details</span>
+            <h2 className="text-3xl md:text-4xl font-bold mt-3 mb-4">MCP Tool Schema Examples</h2>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              Each MCP tool is defined with a structured schema for AI agent integration
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div className="premium-card p-6 rounded-xl">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="bg-watch-blue/10 p-2 rounded-lg">
+                  <Search className="h-5 w-5 text-watch-blue" />
+                </div>
+                <h3 className="text-xl font-semibold">getWatchData</h3>
+              </div>
+              
+              <div className="font-mono text-sm bg-black/50 p-4 rounded-lg border border-gray-700 overflow-x-auto">
+                <pre className="text-gray-300">
+{`{
+  "name": "getWatchData",
+  "description": "Get comprehensive data for a specific watch",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "referenceNumber": {
+        "type": "string",
+        "description": "The manufacturer reference number"
+      },
+      "brand": {
+        "type": "string",
+        "description": "Watch brand name"
+      },
+      "model": {
+        "type": "string",
+        "description": "Watch model name"
+      },
+      "includeMarketData": {
+        "type": "boolean",
+        "description": "Include current market pricing data",
+        "default": true
+      }
+    },
+    "required": ["referenceNumber"]
+  }
+}`}
+                </pre>
+              </div>
+            </div>
+            
+            <div className="premium-card p-6 rounded-xl">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="bg-watch-blue/10 p-2 rounded-lg">
+                  <Compare className="h-5 w-5 text-watch-blue" />
+                </div>
+                <h3 className="text-xl font-semibold">findArbitrageOpportunities</h3>
+              </div>
+              
+              <div className="font-mono text-sm bg-black/50 p-4 rounded-lg border border-gray-700 overflow-x-auto">
+                <pre className="text-gray-300">
+{`{
+  "name": "findArbitrageOpportunities",
+  "description": "Identify price arbitrage opportunities across markets",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "brand": {
+        "type": "string",
+        "description": "Filter by watch brand"
+      },
+      "minROI": {
+        "type": "number",
+        "description": "Minimum ROI percentage",
+        "default": 5
+      },
+      "maxBudget": {
+        "type": "number",
+        "description": "Maximum purchase budget"
+      },
+      "includeFees": {
+        "type": "boolean",
+        "description": "Include all transaction fees in calculations",
+        "default": true
+      },
+      "marketRegions": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["US", "EU", "UK", "JP", "HK", "CH"]
+        },
+        "description": "Market regions to include in search"
+      }
+    }
+  }
+}`}
+                </pre>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-14 flex justify-center">
+            <Link to="/contact">
+              <Button className="button-premium">
+                Request Full API Documentation
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -370,6 +503,197 @@ const McpServer = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Integration Code Example - New Section */}
+      <section className="py-16 px-6 bg-black/95 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="text-watch-blue text-sm font-medium uppercase tracking-wider">Developer Resources</span>
+            <h2 className="text-3xl md:text-4xl font-bold mt-3 mb-4">AI Integration Examples</h2>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              Seamlessly integrate AI agents with ChronoMarket Pro using our MCP Server
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div className="premium-card p-6 rounded-xl">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="bg-watch-blue/10 p-2 rounded-lg">
+                  <Terminal className="h-5 w-5 text-watch-blue" />
+                </div>
+                <h3 className="text-xl font-semibold">OpenAI Integration</h3>
+              </div>
+              
+              <div className="font-mono text-sm bg-black/50 p-4 rounded-lg border border-gray-700 overflow-x-auto">
+                <pre className="text-gray-300">
+{`// Example: Connecting GPT to ChronoMarket MCP
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+const chronoTools = [
+  {
+    "type": "function",
+    "function": {
+      "name": "getWatchData",
+      "description": "Get data for a specific watch",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "referenceNumber": {
+            "type": "string",
+            "description": "Watch reference number"
+          }
+        },
+        "required": ["referenceNumber"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "findArbitrageOpportunities",
+      "description": "Find arbitrage opportunities",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "minROI": {
+            "type": "number",
+            "description": "Minimum ROI percentage"
+          }
+        }
+      }
+    }
+  }
+];
+
+// Connect to ChronoMarket's MCP Server
+const chronoMarketMCP = {
+  getWatchData: async (args) => {
+    // API call to ChronoMarket MCP Server
+    const response = await fetch(
+      'https://api.chronomarket.com/mcp/getWatchData',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': \`Bearer \${process.env.CHRONO_API_KEY}\`
+        },
+        body: JSON.stringify(args)
+      }
+    );
+    return await response.json();
+  },
+  
+  findArbitrageOpportunities: async (args) => {
+    // API call to ChronoMarket MCP Server
+    const response = await fetch(
+      'https://api.chronomarket.com/mcp/findArbitrageOpportunities',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': \`Bearer \${process.env.CHRONO_API_KEY}\`
+        },
+        body: JSON.stringify(args)
+      }
+    );
+    return await response.json();
+  }
+};`}
+                </pre>
+              </div>
+            </div>
+            
+            <div className="premium-card p-6 rounded-xl">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="bg-watch-blue/10 p-2 rounded-lg">
+                  <PanelTop className="h-5 w-5 text-watch-blue" />
+                </div>
+                <h3 className="text-xl font-semibold">AI Agent Usage</h3>
+              </div>
+              
+              <div className="font-mono text-sm bg-black/50 p-4 rounded-lg border border-gray-700 overflow-x-auto">
+                <pre className="text-gray-300">
+{`// Example: Using an AI agent with ChronoMarket MCP
+async function runAgentWithTools() {
+  const chatCompletion = await openai.chat.completions.create({
+    model: "gpt-4-turbo",
+    messages: [
+      {
+        role: "system",
+        content: "You are a watch trading assistant that helps users find arbitrage opportunities."
+      },
+      {
+        role: "user",
+        content: "Find me arbitrage opportunities for Rolex watches with at least 8% ROI."
+      }
+    ],
+    tools: chronoTools
+  });
+
+  // Handle tool calls
+  const message = chatCompletion.choices[0].message;
+  
+  if (message.tool_calls) {
+    const toolResults = await Promise.all(
+      message.tool_calls.map(async (toolCall) => {
+        const functionName = toolCall.function.name;
+        const functionArgs = JSON.parse(toolCall.function.arguments);
+        
+        // Call the corresponding function in our MCP integration
+        const result = await chronoMarketMCP[functionName](functionArgs);
+        
+        return {
+          tool_call_id: toolCall.id,
+          function_name: functionName,
+          output: JSON.stringify(result)
+        };
+      })
+    );
+    
+    // Send results back to the model
+    const secondResponse = await openai.chat.completions.create({
+      model: "gpt-4-turbo",
+      messages: [
+        {
+          role: "system",
+          content: "You are a watch trading assistant."
+        },
+        {
+          role: "user",
+          content: "Find me arbitrage opportunities for Rolex watches with at least 8% ROI."
+        },
+        message,
+        ...toolResults.map((result) => ({
+          role: "tool",
+          tool_call_id: result.tool_call_id,
+          content: result.output
+        }))
+      ]
+    });
+    
+    return secondResponse.choices[0].message.content;
+  }
+  
+  return message.content;
+}`}
+                </pre>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-14 flex justify-center">
+            <Link to="/contact">
+              <Button className="button-premium">
+                Get Developer Access
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
