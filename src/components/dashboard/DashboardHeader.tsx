@@ -3,8 +3,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import DataFetcher from "./DataFetcher";
-import ApiConnectionStatus from "./ApiConnectionStatus";
 
 interface DashboardHeaderProps {
   activeTab: string;
@@ -50,8 +48,7 @@ const DashboardHeader = ({ activeTab, onChange }: DashboardHeaderProps) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {activeTab !== "settings" && <DataFetcher />}
-        {/* ApiConnectionStatus is no longer displayed here */}
+        {/* Both ApiConnectionStatus and DataFetcher are now in the Account Settings section */}
       </div>
     </div>
   );
