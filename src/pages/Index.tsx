@@ -1,4 +1,3 @@
-
 import { BarChart3, Globe, Calculator, Sparkles, Bell, RefreshCw, Users, Lock } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -6,8 +5,29 @@ import FeatureCard from '@/components/FeatureCard';
 import PriceComparison from '@/components/PriceComparison';
 import PremiumFeatures from '@/components/PremiumFeatures';
 import Footer from '@/components/Footer';
+import { useEffect } from 'react';
+import { updateWatchChartsApiKeys } from '@/scripts/updateApiKeys';
+import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
+  const { toast } = useToast();
+  
+  useEffect(() => {
+    const setupApiKeys = async () => {
+      const success = await updateWatchChartsApiKeys();
+      
+      if (success) {
+        toast({
+          title: "API Keys Updated",
+          description: "Watch Charts API keys have been successfully updated.",
+          variant: "default",
+        });
+      }
+    };
+    
+    setupApiKeys();
+  }, [toast]);
+  
   return (
     <div className="min-h-screen">
       <Navbar />
