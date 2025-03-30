@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { FileText } from "lucide-react";
 import { formatCurrency } from "@/utils/formatters";
+import PriceTrendChart from "./PriceTrendChart";
 
 interface SimilarSale {
   price: number;
@@ -34,6 +35,27 @@ const PriceAnalysisResult = ({
   onRecalculate,
   isCalculating
 }: PriceAnalysisResultProps) => {
+  // Generate historical price data based on similar sales and current estimate
+  // In a real app, this would come from API data
+  const historicalPriceData = [
+    { date: '6 months ago', price: Math.round(result.estimated_price * 0.92) },
+    { date: '5 months ago', price: Math.round(result.estimated_price * 0.94) },
+    { date: '4 months ago', price: Math.round(result.estimated_price * 0.97) },
+    { date: '3 months ago', price: Math.round(result.estimated_price * 0.99) },
+    { date: '2 months ago', price: Math.round(result.estimated_price * 1.01) },
+    { date: '1 month ago', price: Math.round(result.estimated_price * 1.02) },
+    { date: 'Current', price: result.estimated_price },
+  ];
+
+  // Add future projection point if price trend is not stable
+  if (result.price_trend !== 'stable') {
+    const futurePrice = result.price_trend === 'up' 
+      ? Math.round(result.estimated_price * 1.05) 
+      : Math.round(result.estimated_price * 0.95);
+    
+    historicalPriceData.push({ date: 'Projected', price: futurePrice });
+  }
+
   return (
     <>
       <CardHeader>
@@ -70,6 +92,14 @@ const PriceAnalysisResult = ({
               result.market_liquidity === 'medium' ? 'Medium' : 'Low'}
             </span>
           </div>
+        </div>
+        
+        <div>
+          <h4 className="font-medium mb-2">Price Trend</h4>
+          <PriceTrendChart 
+            data={historicalPriceData} 
+            currentPrice={result.estimated_price} 
+          />
         </div>
         
         <div>

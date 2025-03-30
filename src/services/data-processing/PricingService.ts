@@ -11,6 +11,7 @@ export const usePremiumPricingCalculator = () => {
     market_liquidity: 'high' | 'medium' | 'low';
     price_trend: 'up' | 'down' | 'stable';
     similar_recent_sales: Array<{price: number, date: string, condition: string}>;
+    historical_prices?: Array<{date: string, price: number}>;
   } | null>(null);
   
   const calculatePrice = (
@@ -45,6 +46,24 @@ export const usePremiumPricingCalculator = () => {
       const calculatedPrice = basePrice * conditionMultiplier * boxPapersMultiplier * serviceMultiplier;
       const variance = calculatedPrice * 0.12; // 12% variance for confidence interval
       
+      // Generate mock historical price data
+      const mockHistoricalPrices = [
+        { date: '6 months ago', price: Math.round(calculatedPrice * 0.92) },
+        { date: '5 months ago', price: Math.round(calculatedPrice * 0.94) },
+        { date: '4 months ago', price: Math.round(calculatedPrice * 0.97) },
+        { date: '3 months ago', price: Math.round(calculatedPrice * 0.99) },
+        { date: '2 months ago', price: Math.round(calculatedPrice * 1.01) },
+        { date: '1 month ago', price: Math.round(calculatedPrice * 1.02) },
+        { date: 'Current', price: Math.round(calculatedPrice) },
+      ];
+      
+      // Determine price trend based on historical data
+      const priceTrend: 'up' | 'down' | 'stable' = 
+        mockHistoricalPrices[mockHistoricalPrices.length - 1].price > 
+        mockHistoricalPrices[0].price ? 'up' : 
+        mockHistoricalPrices[mockHistoricalPrices.length - 1].price < 
+        mockHistoricalPrices[0].price ? 'down' : 'stable';
+      
       setResult({
         estimated_price: Math.round(calculatedPrice),
         confidence_interval: [
@@ -52,12 +71,13 @@ export const usePremiumPricingCalculator = () => {
           Math.round(calculatedPrice + variance)
         ],
         market_liquidity: 'medium',
-        price_trend: 'stable',
+        price_trend: priceTrend,
         similar_recent_sales: [
           { price: Math.round(calculatedPrice * 0.97), date: '2023-06-15', condition: 'excellent' },
           { price: Math.round(calculatedPrice * 1.02), date: '2023-05-28', condition: 'mint' },
           { price: Math.round(calculatedPrice * 0.95), date: '2023-05-10', condition: 'good' }
-        ]
+        ],
+        historical_prices: mockHistoricalPrices
       });
       
       setIsCalculating(false);
