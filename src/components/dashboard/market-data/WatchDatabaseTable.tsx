@@ -54,11 +54,7 @@ const WatchDatabaseTable = ({
           </TableHeader>
           <TableBody>
             {watchData.map((watch) => (
-              <TableRow 
-                key={watch.id} 
-                className={`cursor-pointer ${selectedWatch.id === watch.id ? 'bg-muted' : ''}`}
-                onClick={() => onSelectWatch(watch)}
-              >
+              <TableRow key={watch.id} className={selectedWatch.id === watch.id ? 'bg-muted' : ''}>
                 <TableCell className="font-medium">{watch.brand}</TableCell>
                 <TableCell>{watch.model}</TableCell>
                 <TableCell>{watch.reference}</TableCell>
@@ -84,10 +80,7 @@ const WatchDatabaseTable = ({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onSelectWatch(watch);
-                    }}
+                    onClick={() => onSelectWatch(watch)}
                   >
                     View
                   </Button>
