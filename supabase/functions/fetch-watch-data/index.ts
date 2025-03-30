@@ -26,24 +26,47 @@ serve(async (req) => {
     
     console.log("Starting data fetch with API key:", apiKey);
     
-    // Here you would add the actual implementation to fetch data from Watch Charts API
-    // For now we'll just simulate success
-    
-    // Mock implementation - in a real scenario you would:
-    // 1. Fetch data from Watch Charts API using the provided apiKey
-    // 2. Process the data
-    // 3. Store it in your Supabase database
-    
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: "Data fetched successfully" 
-      }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+    // Fetch data from Watch Charts API
+    try {
+      // This is a placeholder URL - replace with the actual Watch Charts API endpoint
+      const watchChartsUrl = "https://api.watchcharts.com/v2/watches";
+      
+      const response = await fetch(watchChartsUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}: ${await response.text()}`);
+      }
+      
+      const watchData = await response.json();
+      console.log(`Successfully fetched data for ${watchData.length || 'unknown number of'} watches`);
+      
+      // In a real implementation, you would process and store this data in your Supabase database
+      // For this example, we're just returning success
+      
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: "Data fetched successfully",
+          count: watchData.length || 0
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    } catch (apiError) {
+      console.error("Error fetching from Watch Charts API:", apiError);
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: `Error fetching from Watch Charts API: ${apiError.message}`
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 500 }
+      );
+    }
   } catch (error) {
     console.error("Error processing request:", error);
     
