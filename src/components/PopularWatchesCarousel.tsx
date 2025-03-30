@@ -11,7 +11,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { popularWatches } from '@/data/popularWatches';
-import { getWatchImages } from '@/services/WatchDataService';
+import { getWatchImages } from '@/services/watch/watchImageService';
 import { useToast } from "@/components/ui/use-toast";
 import { Watch } from '@/types/watch';
 

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { getWatchData } from '@/services/WatchDataService';
+import { getWatchData } from '@/services/watch/watchApiService';
 import { Watch } from '@/types/watch';
 import WatchListingTable from '@/components/comparison/WatchListingTable';
 import ComparisonFilters from '@/components/comparison/ComparisonFilters';

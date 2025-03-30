@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { triggerDataFetch, verifyWatchChartsAPI } from '@/services/WatchDataService';
+import { triggerDataFetch, verifyWatchChartsAPI } from '@/services/watch/watchApiService';
 import { useToast } from '@/hooks/use-toast';
 
 const DataFetcher = () => {
