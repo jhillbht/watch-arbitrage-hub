@@ -1,8 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Search, RefreshCw } from 'lucide-react';
+import { Search, RefreshCcw } from 'lucide-react';
 
 const ApiSchemaSection = () => {
   return (
@@ -61,7 +59,7 @@ const ApiSchemaSection = () => {
           <div className="premium-card p-6 rounded-xl">
             <div className="flex items-center space-x-3 mb-4">
               <div className="bg-watch-blue/10 p-2 rounded-lg">
-                <RefreshCw className="h-5 w-5 text-watch-blue" />
+                <RefreshCcw className="h-5 w-5 text-watch-blue" />
               </div>
               <h3 className="text-xl font-semibold">findArbitrageOpportunities</h3>
             </div>
@@ -106,14 +104,6 @@ const ApiSchemaSection = () => {
               </pre>
             </div>
           </div>
-        </div>
-        
-        <div className="mt-14 flex justify-center">
-          <Link to="/contact">
-            <Button className="button-premium">
-              Request Full API Documentation
-            </Button>
-          </Link>
         </div>
       </div>
     </section>
