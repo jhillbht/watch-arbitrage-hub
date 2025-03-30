@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { RefreshCw, CheckCircle, AlertCircle, ExternalLink, Gift } from 'lucide-react';
+import { RefreshCw, CheckCircle, AlertCircle, ExternalLink, Gift, Bug } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -11,12 +11,14 @@ import { useToast } from '@/hooks/use-toast';
 const ApiConnectionStatus = () => {
   const [isChecking, setIsChecking] = useState(false);
   const [testMode, setTestMode] = useState(false);
+  const [debugMode, setDebugMode] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<{
     checked: boolean;
     success: boolean;
     message: string;
     count?: number;
     test?: boolean;
+    details?: string;
   }>({
     checked: false,
     success: false,
@@ -27,13 +29,14 @@ const ApiConnectionStatus = () => {
   const checkApiConnection = async () => {
     setIsChecking(true);
     try {
-      const result = await verifyWatchChartsAPI(testMode);
+      const result = await verifyWatchChartsAPI(testMode, debugMode);
       setConnectionStatus({
         checked: true,
         success: result.success,
         message: result.message,
         count: result.count,
-        test: result.test
+        test: result.test,
+        details: result.details
       });
       
       if (result.success) {
@@ -77,13 +80,25 @@ const ApiConnectionStatus = () => {
         <CardTitle className="text-lg flex items-center justify-between">
           <span>Watch Charts API Status</span>
           <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mr-2">
               <Switch
                 id="test-mode"
                 checked={testMode}
                 onCheckedChange={setTestMode}
               />
               <Label htmlFor="test-mode" className="text-sm">Test Mode</Label>
+            </div>
+            <div className="flex items-center space-x-2 mr-2">
+              <Switch
+                id="debug-mode"
+                checked={debugMode}
+                onCheckedChange={setDebugMode}
+              />
+              <Label htmlFor="debug-mode" className="text-sm">
+                <span className="flex items-center">
+                  Debug <Bug className="ml-1 h-3 w-3" />
+                </span>
+              </Label>
             </div>
             <Button 
               variant="ghost" 
@@ -120,10 +135,22 @@ const ApiConnectionStatus = () => {
               {connectionStatus.test && (
                 <span className="ml-2 text-amber-500 text-xs font-normal">(Test Mode)</span>
               )}
+              {debugMode && (
+                <span className="ml-2 text-purple-500 text-xs font-normal">(Debug Mode)</span>
+              )}
             </p>
             <p className="text-sm text-muted-foreground">{connectionStatus.message}</p>
             {connectionStatus.success && connectionStatus.count !== undefined && (
               <p className="text-sm mt-1">Retrieved data for <span className="font-semibold">{connectionStatus.count}</span> watches</p>
+            )}
+            
+            {!connectionStatus.success && !connectionStatus.test && connectionStatus.details && (
+              <details className="mt-2 text-xs">
+                <summary className="cursor-pointer text-amber-500">View Error Details</summary>
+                <pre className="mt-1 bg-slate-800 p-2 rounded text-gray-300 overflow-x-auto">
+                  {connectionStatus.details}
+                </pre>
+              </details>
             )}
             
             {!connectionStatus.success && !connectionStatus.test && (

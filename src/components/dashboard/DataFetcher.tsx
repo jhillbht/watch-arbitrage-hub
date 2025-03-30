@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { RefreshCw, CheckCircle, AlertCircle } from 'lucide-react';
+import { RefreshCw, CheckCircle, AlertCircle, Bug } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 const DataFetcher = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [testMode, setTestMode] = useState(false);
+  const [debugMode, setDebugMode] = useState(false);
   const [lastFetchStatus, setLastFetchStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [lastFetchTime, setLastFetchTime] = useState<Date | null>(null);
   const { toast } = useToast();
@@ -17,7 +18,7 @@ const DataFetcher = () => {
   const handleFetchData = async () => {
     setIsFetching(true);
     try {
-      const success = await triggerDataFetch(testMode);
+      const success = await triggerDataFetch(testMode, debugMode);
       
       if (success) {
         setLastFetchStatus('success');
@@ -68,16 +69,33 @@ const DataFetcher = () => {
           {testMode && lastFetchStatus !== 'idle' && (
             <span className="ml-2 text-amber-500 text-xs">(Test Mode)</span>
           )}
+          {debugMode && (
+            <span className="ml-2 text-purple-500 text-xs">(Debug Mode)</span>
+          )}
         </p>
       </div>
       <div className="flex items-center gap-3">
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="data-test-mode"
-            checked={testMode}
-            onCheckedChange={setTestMode}
-          />
-          <Label htmlFor="data-test-mode" className="text-sm text-gray-300">Test Mode</Label>
+        <div className="flex flex-col sm:flex-row items-center gap-3">
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="data-test-mode"
+              checked={testMode}
+              onCheckedChange={setTestMode}
+            />
+            <Label htmlFor="data-test-mode" className="text-sm text-gray-300">Test Mode</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="data-debug-mode"
+              checked={debugMode}
+              onCheckedChange={setDebugMode}
+            />
+            <Label htmlFor="data-debug-mode" className="text-sm text-gray-300">
+              <span className="flex items-center">
+                Debug Mode <Bug className="ml-1 h-3 w-3" />
+              </span>
+            </Label>
+          </div>
         </div>
         <Button
           onClick={handleFetchData}

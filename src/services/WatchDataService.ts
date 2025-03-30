@@ -111,10 +111,10 @@ export const fetchWatchWithPremiumData = async (watchId: string): Promise<Watch 
   }
 };
 
-export const triggerDataFetch = async (testMode: boolean = false): Promise<boolean> => {
+export const triggerDataFetch = async (testMode: boolean = false, debug: boolean = false): Promise<boolean> => {
   try {
     const { data, error } = await supabase.functions.invoke('fetch-watch-data', {
-      body: { testMode }
+      body: { testMode, debug }
     });
     
     if (error) {
@@ -131,15 +131,16 @@ export const triggerDataFetch = async (testMode: boolean = false): Promise<boole
 };
 
 // Function to verify API connection and log the response
-export const verifyWatchChartsAPI = async (testMode: boolean = false): Promise<{
+export const verifyWatchChartsAPI = async (testMode: boolean = false, debug: boolean = false): Promise<{
   success: boolean, 
   message: string, 
   count?: number,
-  test?: boolean
+  test?: boolean,
+  details?: string
 }> => {
   try {
     const { data, error } = await supabase.functions.invoke('fetch-watch-data', {
-      body: { testMode }
+      body: { testMode, debug }
     });
     
     if (error) {
@@ -151,7 +152,8 @@ export const verifyWatchChartsAPI = async (testMode: boolean = false): Promise<{
       success: data?.success, 
       message: data?.message || 'Unknown response', 
       count: data?.count,
-      test: data?.test 
+      test: data?.test,
+      details: data?.details
     };
   } catch (error) {
     console.error('Error in verifyWatchChartsAPI:', error);
