@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Search, BarChart3, DollarSign, AlertCircle, LayoutGrid } from 'lucide-react';
+import { Search, BarChart3, DollarSign, AlertCircle, LayoutGrid, RefreshCcw } from 'lucide-react';
 
 const McpToolsSection = () => {
   return (
@@ -36,7 +36,7 @@ const McpToolsSection = () => {
           
           <div className="premium-card p-6 rounded-xl">
             <div className="bg-watch-blue/10 p-3 rounded-lg inline-block mb-4">
-              <RefreshCw className="h-6 w-6 text-watch-blue" />
+              <RefreshCcw className="h-6 w-6 text-watch-blue" />
             </div>
             <h3 className="text-xl font-semibold mb-2">findArbitrageOpportunities</h3>
             <p className="text-gray-400">

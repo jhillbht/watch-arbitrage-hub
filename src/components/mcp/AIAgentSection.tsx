@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Bot, Cpu, Brain } from 'lucide-react';
+import { Bot, Cpu, LineChart } from 'lucide-react';
 
 const AIAgentSection = () => {
   return (
@@ -37,7 +37,7 @@ const AIAgentSection = () => {
           
           <div className="premium-card p-6 rounded-xl">
             <div className="bg-watch-blue/10 p-3 rounded-lg inline-block mb-4">
-              <Brain className="h-6 w-6 text-watch-blue" />
+              <LineChart className="h-6 w-6 text-watch-blue" />
             </div>
             <h3 className="text-xl font-semibold mb-2">Autonomous Operation</h3>
             <p className="text-gray-400">

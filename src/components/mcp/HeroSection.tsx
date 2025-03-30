@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Bot, Terminal, Workflow } from 'lucide-react';
+import { ArrowRight, Bot, Terminal, Workflow, Timer, LineChart } from 'lucide-react';
 
 const HeroSection = () => {
   return (
@@ -93,7 +93,7 @@ const HeroSection = () => {
                   <div className="glass-card p-4 bg-black/60 border border-gray-700">
                     <div className="flex justify-between">
                       <div className="flex items-center space-x-3">
-                        <Clock className="h-5 w-5 text-watch-blue" />
+                        <Timer className="h-5 w-5 text-watch-blue" />
                         <h4 className="font-medium text-white">Real-time Analysis</h4>
                       </div>
                       <div className="text-right">
@@ -105,7 +105,7 @@ const HeroSection = () => {
                   <div className="glass-card p-4 bg-black/60 border border-gray-700">
                     <div className="flex justify-between">
                       <div className="flex items-center space-x-3">
-                        <Brain className="h-5 w-5 text-watch-blue" />
+                        <LineChart className="h-5 w-5 text-watch-blue" />
                         <h4 className="font-medium text-white">Autonomous Trading</h4>
                       </div>
                       <div className="text-right">
