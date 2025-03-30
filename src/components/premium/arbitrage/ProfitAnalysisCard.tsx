@@ -5,6 +5,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from '@/components/ui/separator';
 import { FileDown, Share } from 'lucide-react';
 import { formatCurrency } from '@/utils/formatters';
+import ROISummary from './ROISummary';
+import MarketComparison from './MarketComparison';
+import FeeBreakdown from './FeeBreakdown';
 
 export interface ArbitrageCalculation {
   buyPrice: number;
@@ -43,53 +46,47 @@ const ProfitAnalysisCard = ({ calculation }: ProfitAnalysisCardProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="bg-muted p-4 rounded-md text-center">
-          <div className="text-2xl font-bold mb-1">
-            {formatCurrency(calculation.profit)}
-          </div>
-          <div className="text-sm text-muted-foreground">
-            Estimated Profit
-          </div>
-          <div className={`mt-1 text-sm ${calculation.roi > 0 ? 'text-green-600' : 'text-red-600'}`}>
-            ROI: {calculation.roi.toFixed(2)}%
-          </div>
-        </div>
+        <ROISummary 
+          profit={calculation.profit} 
+          roi={calculation.roi} 
+          totalCost={calculation.totalCost} 
+        />
+        
+        <MarketComparison
+          buyMarket="Source"
+          buyPrice={calculation.buyPrice}
+          sellMarket="Target"
+          sellPrice={calculation.sellPrice}
+          priceDifference={calculation.sellPrice - calculation.buyPrice}
+        />
+        
+        <FeeBreakdown 
+          fees={{
+            importDuty: calculation.importDuty,
+            shipping: calculation.shippingCost,
+            platformFee: calculation.platformFee,
+            insurance: calculation.insurance,
+            currencyConversion: calculation.currencyConversionFee
+          }}
+        />
         
         <div className="space-y-3">
-          <h3 className="font-medium">Cost Breakdown</h3>
+          <h3 className="font-medium">Summary</h3>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span>Purchase Price</span>
-              <span>{formatCurrency(calculation.buyPrice)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Import Duty</span>
-              <span>{formatCurrency(calculation.importDuty)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Shipping</span>
-              <span>{formatCurrency(calculation.shippingCost)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Insurance</span>
-              <span>{formatCurrency(calculation.insurance)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Currency Conversion</span>
-              <span>{formatCurrency(calculation.currencyConversionFee)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Platform Fee</span>
-              <span>{formatCurrency(calculation.platformFee)}</span>
-            </div>
-            <Separator />
-            <div className="flex justify-between font-medium">
               <span>Total Cost</span>
               <span>{formatCurrency(calculation.totalCost)}</span>
             </div>
-            <div className="flex justify-between font-medium">
+            <div className="flex justify-between">
               <span>Sell Price</span>
               <span>{formatCurrency(calculation.sellPrice)}</span>
+            </div>
+            <Separator />
+            <div className="flex justify-between font-medium">
+              <span>Net Profit</span>
+              <span className={calculation.profit > 0 ? 'text-green-600' : 'text-red-600'}>
+                {formatCurrency(calculation.profit)}
+              </span>
             </div>
           </div>
         </div>

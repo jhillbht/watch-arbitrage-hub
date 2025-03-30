@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { usePremium } from '@/hooks/use-premium';
 import PremiumFeatureLock from './PremiumFeatureLock';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import ArbitrageCalculatorForm from './arbitrage/ArbitrageCalculatorForm';
 import ProfitAnalysisCard, { ArbitrageCalculation } from './arbitrage/ProfitAnalysisCard';
 
