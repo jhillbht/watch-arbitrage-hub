@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatCurrency } from '@/utils/formatters';
+import PriceTrendChart from '../pricing-calculator/PriceTrendChart';
 
 interface OpportunityFees {
   import: number;
@@ -29,10 +30,19 @@ interface OpportunityDetailProps {
     fees: OpportunityFees;
     confidence: string;
     details: string;
+    priceHistory?: Array<{ date: string; price: number }>;
   };
 }
 
 const OpportunityDetail = ({ opportunity }: OpportunityDetailProps) => {
+  // Mock price history data if not provided
+  const priceHistoryData = opportunity.priceHistory || [
+    { date: '6 months ago', price: Math.round(opportunity.sellPrice * 0.9) },
+    { date: '3 months ago', price: Math.round(opportunity.sellPrice * 0.95) },
+    { date: '1 month ago', price: Math.round(opportunity.sellPrice * 0.97) },
+    { date: 'Current', price: opportunity.sellPrice },
+  ];
+
   return (
     <Card className="mb-6">
       <CardHeader>
@@ -66,6 +76,17 @@ const OpportunityDetail = ({ opportunity }: OpportunityDetailProps) => {
               )}
             </div>
           </div>
+        </div>
+        
+        {/* Add price trend chart */}
+        <div>
+          <h4 className="text-sm font-medium mb-2">Price History</h4>
+          <PriceTrendChart
+            data={priceHistoryData}
+            height="200px"
+            lineColor="#16a34a"
+            showReferenceLine={false}
+          />
         </div>
         
         <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between space-y-4 md:space-y-0 md:space-x-6 p-4 bg-muted rounded-md">

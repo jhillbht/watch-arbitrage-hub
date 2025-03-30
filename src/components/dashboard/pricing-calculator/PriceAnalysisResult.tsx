@@ -44,7 +44,7 @@ const PriceAnalysisResult = ({
     { date: '3 months ago', price: Math.round(result.estimated_price * 0.99) },
     { date: '2 months ago', price: Math.round(result.estimated_price * 1.01) },
     { date: '1 month ago', price: Math.round(result.estimated_price * 1.02) },
-    { date: 'Current', price: result.estimated_price },
+    { date: 'Current', price: Math.round(result.estimated_price) },
   ];
 
   // Add future projection point if price trend is not stable
@@ -55,6 +55,10 @@ const PriceAnalysisResult = ({
     
     historicalPriceData.push({ date: 'Projected', price: futurePrice });
   }
+
+  // Define line color based on price trend
+  const lineColor = result.price_trend === 'up' ? '#16a34a' : 
+                  result.price_trend === 'down' ? '#dc2626' : '#007AFF';
 
   return (
     <>
@@ -98,7 +102,8 @@ const PriceAnalysisResult = ({
           <h4 className="font-medium mb-2">Price Trend</h4>
           <PriceTrendChart 
             data={historicalPriceData} 
-            currentPrice={result.estimated_price} 
+            currentPrice={result.estimated_price}
+            lineColor={lineColor}
           />
         </div>
         

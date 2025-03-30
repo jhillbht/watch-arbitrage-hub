@@ -1,15 +1,4 @@
-
 import { useState } from 'react';
-import { 
-  LineChart, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer,
-  Legend
-} from 'recharts';
 import { Search, Filter, ArrowUpRight, ArrowDownRight, Info } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip as UITooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import PriceTrendChart from './pricing-calculator/PriceTrendChart';
 
 // Mock data
 const historicalPriceData = [
@@ -122,6 +112,12 @@ const DashboardMarketData = () => {
     setSelectedWatch(watch);
   };
 
+  // Format historical data for the chart
+  const chartData = historicalPriceData.map(item => ({
+    date: item.date,
+    price: item.value
+  }));
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
@@ -164,33 +160,13 @@ const DashboardMarketData = () => {
                 <TabsTrigger value="ALL" onClick={() => setTimeRange('ALL')}>All</TabsTrigger>
               </TabsList>
             </Tabs>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={historicalPriceData}
-                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis
-                    tickFormatter={(value) => `$${value.toLocaleString()}`}
-                  />
-                  <Tooltip
-                    formatter={(value) => [`$${Number(value).toLocaleString()}`, 'Market Price']}
-                    labelFormatter={(label) => `Date: ${label}`}
-                  />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="value"
-                    name="Market Price"
-                    stroke="#007AFF"
-                    activeDot={{ r: 8 }}
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            
+            {/* Use our shared PriceTrendChart component */}
+            <PriceTrendChart 
+              data={chartData}
+              height="300px"
+              showReferenceLine={false}
+            />
           </CardContent>
           <CardFooter className="text-sm text-muted-foreground">
             Data sourced from WatchCharts API and market aggregators

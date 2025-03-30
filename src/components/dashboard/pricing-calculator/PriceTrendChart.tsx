@@ -15,13 +15,29 @@ interface PriceTrendChartProps {
   data: Array<{
     date: string;
     price: number;
+    [key: string]: any; // Allow additional data points
   }>;
-  currentPrice: number;
+  currentPrice?: number;
+  height?: string | number;
+  lineColor?: string;
+  referenceLineColor?: string;
+  valueKey?: string;
+  showReferenceLine?: boolean;
+  referenceLabel?: string;
 }
 
-const PriceTrendChart = ({ data, currentPrice }: PriceTrendChartProps) => {
+const PriceTrendChart = ({ 
+  data, 
+  currentPrice,
+  height = "200px",
+  lineColor = "#007AFF",
+  valueKey = "price",
+  showReferenceLine = true,
+  referenceLineColor = "#ff6b6b",
+  referenceLabel = "Current Est."
+}: PriceTrendChartProps) => {
   return (
-    <div className="h-[200px] w-full mt-4 mb-2">
+    <div className="w-full mt-4 mb-2" style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data}
@@ -42,21 +58,23 @@ const PriceTrendChart = ({ data, currentPrice }: PriceTrendChartProps) => {
             formatter={(value) => [formatCurrency(Number(value)), "Price"]}
             labelFormatter={(label) => `Date: ${label}`}
           />
-          <ReferenceLine
-            y={currentPrice}
-            stroke="#ff6b6b"
-            strokeDasharray="3 3"
-            label={{
-              value: "Current Est.",
-              fill: "#ff6b6b",
-              fontSize: 12,
-              position: "insideBottomRight",
-            }}
-          />
+          {showReferenceLine && currentPrice && (
+            <ReferenceLine
+              y={currentPrice}
+              stroke={referenceLineColor}
+              strokeDasharray="3 3"
+              label={{
+                value: referenceLabel,
+                fill: referenceLineColor,
+                fontSize: 12,
+                position: "insideBottomRight",
+              }}
+            />
+          )}
           <Line
             type="monotone"
-            dataKey="price"
-            stroke="#007AFF"
+            dataKey={valueKey}
+            stroke={lineColor}
             strokeWidth={2}
             dot={{ r: 3 }}
             activeDot={{ r: 5 }}
