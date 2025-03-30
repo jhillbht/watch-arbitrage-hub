@@ -7,7 +7,6 @@ import {
   Server, 
   Globe, 
   Shield, 
-  PanelTop, 
   Database, 
   Bot, 
   Cpu, 
