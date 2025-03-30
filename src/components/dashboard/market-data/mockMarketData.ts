@@ -59,24 +59,58 @@ export const watchData = [
   },
 ];
 
-export const historicalPriceData = [
-  { date: 'Jan 2023', value: 32000 },
-  { date: 'Feb 2023', value: 34000 },
-  { date: 'Mar 2023', value: 38000 },
-  { date: 'Apr 2023', value: 41000 },
-  { date: 'May 2023', value: 40000 },
-  { date: 'Jun 2023', value: 42000 },
-  { date: 'Jul 2023', value: 45000 },
-  { date: 'Aug 2023', value: 49000 },
-  { date: 'Sep 2023', value: 48000 },
-  { date: 'Oct 2023', value: 51000 },
-  { date: 'Nov 2023', value: 54000 },
-  { date: 'Dec 2023', value: 59000 },
-  { date: 'Jan 2024', value: 62000 },
-  { date: 'Feb 2024', value: 65000 },
-  { date: 'Mar 2024', value: 68000 },
-  { date: 'Apr 2024', value: 67000 },
-];
+// Generate a more comprehensive historical price dataset with proper date formatting
+const generateHistoricalPrices = () => {
+  const currentDate = new Date();
+  const data = [];
+  
+  // Generate 24 months of data (2 years) for more realistic trends
+  for (let i = 24; i >= 0; i--) {
+    const date = new Date();
+    date.setMonth(currentDate.getMonth() - i);
+    
+    const monthYear = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    
+    // Create price with some volatility based on timeframe
+    // Base price is 50,000, with different trends depending on time periods
+    let basePrice = 50000;
+    
+    // Last 3 months: downward trend
+    if (i <= 3) {
+      basePrice = 54000 - (i * 1500);
+      // Add some randomness (±3%)
+      const randomFactor = 1 + ((Math.random() * 6) - 3) / 100;
+      basePrice = Math.round(basePrice * randomFactor);
+    } 
+    // 3-6 months ago: stable with minor fluctuations
+    else if (i <= 6) {
+      basePrice = 54000;
+      // Add some randomness (±2%)
+      const randomFactor = 1 + ((Math.random() * 4) - 2) / 100;
+      basePrice = Math.round(basePrice * randomFactor);
+    }
+    // 6-12 months ago: rising trend
+    else if (i <= 12) {
+      basePrice = 42000 + ((12 - i) * 2000);
+      // Add some randomness (±4%)
+      const randomFactor = 1 + ((Math.random() * 8) - 4) / 100;
+      basePrice = Math.round(basePrice * randomFactor);
+    }
+    // 12-24 months ago: initial stability then rising
+    else {
+      basePrice = 35000 + ((24 - i) * 500);
+      // Add some randomness (±5%)
+      const randomFactor = 1 + ((Math.random() * 10) - 5) / 100;
+      basePrice = Math.round(basePrice * randomFactor);
+    }
+    
+    data.push({ date: monthYear, value: basePrice });
+  }
+  
+  return data;
+};
+
+export const historicalPriceData = generateHistoricalPrices();
 
 export const marketComparison = [
   { platform: 'Chrono24', price: 15800, location: 'Global' },

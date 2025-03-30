@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -16,6 +16,37 @@ interface WatchPriceTrendProps {
 
 const WatchPriceTrend = ({ selectedWatch, chartData }: WatchPriceTrendProps) => {
   const [timeRange, setTimeRange] = useState('1Y');
+  
+  // Filter chart data based on selected time range
+  const filteredChartData = useMemo(() => {
+    const now = new Date();
+    let filterDate = new Date();
+    
+    switch (timeRange) {
+      case '1M':
+        filterDate.setMonth(now.getMonth() - 1);
+        break;
+      case '3M':
+        filterDate.setMonth(now.getMonth() - 3);
+        break;
+      case '6M':
+        filterDate.setMonth(now.getMonth() - 6);
+        break;
+      case '1Y':
+        filterDate.setFullYear(now.getFullYear() - 1);
+        break;
+      case 'ALL':
+      default:
+        // No filtering for "ALL" option
+        return chartData;
+    }
+    
+    // Convert date strings to Date objects for comparison
+    return chartData.filter(item => {
+      const itemDate = new Date(item.date);
+      return itemDate >= filterDate;
+    });
+  }, [chartData, timeRange]);
 
   return (
     <Card className="xl:col-span-2">
@@ -29,18 +60,18 @@ const WatchPriceTrend = ({ selectedWatch, chartData }: WatchPriceTrendProps) => 
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="1Y" className="mb-4">
+        <Tabs defaultValue={timeRange} className="mb-4" value={timeRange} onValueChange={setTimeRange}>
           <TabsList>
-            <TabsTrigger value="1M" onClick={() => setTimeRange('1M')}>1M</TabsTrigger>
-            <TabsTrigger value="3M" onClick={() => setTimeRange('3M')}>3M</TabsTrigger>
-            <TabsTrigger value="6M" onClick={() => setTimeRange('6M')}>6M</TabsTrigger>
-            <TabsTrigger value="1Y" onClick={() => setTimeRange('1Y')}>1Y</TabsTrigger>
-            <TabsTrigger value="ALL" onClick={() => setTimeRange('ALL')}>All</TabsTrigger>
+            <TabsTrigger value="1M">1M</TabsTrigger>
+            <TabsTrigger value="3M">3M</TabsTrigger>
+            <TabsTrigger value="6M">6M</TabsTrigger>
+            <TabsTrigger value="1Y">1Y</TabsTrigger>
+            <TabsTrigger value="ALL">All</TabsTrigger>
           </TabsList>
         </Tabs>
         
         <PriceTrendChart 
-          data={chartData}
+          data={filteredChartData}
           height="300px"
           showReferenceLine={false}
         />

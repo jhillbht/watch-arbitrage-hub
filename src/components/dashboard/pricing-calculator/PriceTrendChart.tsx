@@ -36,6 +36,15 @@ const PriceTrendChart = ({
   referenceLineColor = "#ff6b6b",
   referenceLabel = "Current Est."
 }: PriceTrendChartProps) => {
+  // Handle empty data case
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex items-center justify-center w-full" style={{ height }}>
+        <p className="text-muted-foreground">No price data available</p>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full mt-4 mb-2" style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -48,6 +57,7 @@ const PriceTrendChart = ({
             dataKey="date" 
             tick={{ fontSize: 12 }}
             tickMargin={5}
+            minTickGap={15}
           />
           <YAxis
             tick={{ fontSize: 12 }}
