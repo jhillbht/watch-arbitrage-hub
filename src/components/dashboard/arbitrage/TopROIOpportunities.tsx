@@ -1,7 +1,7 @@
 
 import { TrendingUp } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import OpportunityCard from './OpportunityCard';
 
 interface Opportunity {
   id: number;
@@ -14,9 +14,14 @@ interface Opportunity {
 interface TopROIOpportunitiesProps {
   opportunities: Opportunity[];
   onOpportunitySelect: (opportunity: Opportunity) => void;
+  selectedOpportunityId?: number;
 }
 
-const TopROIOpportunities = ({ opportunities, onOpportunitySelect }: TopROIOpportunitiesProps) => {
+const TopROIOpportunities = ({ 
+  opportunities, 
+  onOpportunitySelect,
+  selectedOpportunityId
+}: TopROIOpportunitiesProps) => {
   return (
     <Card>
       <CardHeader>
@@ -31,19 +36,12 @@ const TopROIOpportunities = ({ opportunities, onOpportunitySelect }: TopROIOppor
             .sort((a, b) => b.roi - a.roi)
             .slice(0, 3)
             .map(opportunity => (
-              <div 
-                key={opportunity.id} 
-                className="flex justify-between items-center p-3 bg-muted rounded cursor-pointer hover:bg-accent transition-colors"
-                onClick={() => onOpportunitySelect(opportunity)}
-              >
-                <div>
-                  <p className="font-medium">{opportunity.brand} {opportunity.model}</p>
-                  <p className="text-sm text-muted-foreground">Ref. {opportunity.reference}</p>
-                </div>
-                <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
-                  +{opportunity.roi}% ROI
-                </Badge>
-              </div>
+              <OpportunityCard 
+                key={opportunity.id}
+                opportunity={opportunity}
+                onSelect={onOpportunitySelect}
+                isSelected={selectedOpportunityId === opportunity.id}
+              />
             ))
           }
         </div>

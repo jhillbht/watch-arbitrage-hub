@@ -44,6 +44,7 @@ const DashboardArbitrage = () => {
           <TopROIOpportunities 
             opportunities={arbitrageOpportunities}
             onOpportunitySelect={handleOpportunitySelect}
+            selectedOpportunityId={selectedOpportunity.id}
           />
         </div>
         
